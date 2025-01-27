@@ -104,7 +104,7 @@ class InnerAlarmAdapter(
 
                 alarm.hour = hour
                 alarm.min = minute
-                alarm.repeat = selectedDays
+                alarm.repeat = selectedDays.toMutableList()
                 alarm.isEnabled = true
                 alarmList.alarms.sortBy { alarm ->
                     alarm.hour * 60 + alarm.min

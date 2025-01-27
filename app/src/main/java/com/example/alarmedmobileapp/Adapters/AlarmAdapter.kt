@@ -109,7 +109,7 @@ class AlarmAdapter(
                 val newAlarm = Alarm(
                     hour = hour,
                     min = minute,
-                    repeat = selectedDays,
+                    repeat = selectedDays.toMutableList(),
                     isEnabled = true
                 )
                 alarmList.alarms.add(newAlarm)
