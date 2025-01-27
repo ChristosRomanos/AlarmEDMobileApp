@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Data
 
 enum class Days {
     Monday,

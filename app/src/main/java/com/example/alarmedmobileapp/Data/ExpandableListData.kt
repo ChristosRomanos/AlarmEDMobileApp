@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Data
 
 data class ExpandableListData(
     val title: String,

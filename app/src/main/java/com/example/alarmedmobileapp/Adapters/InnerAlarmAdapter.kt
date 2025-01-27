@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,6 +11,10 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alarmedmobileapp.Data.Alarm
+import com.example.alarmedmobileapp.Data.AlarmList
+import com.example.alarmedmobileapp.Data.Days
+import com.example.alarmedmobileapp.R
 
 class InnerAlarmAdapter(
     private var alarmList: AlarmList, // Updated data class to include "enabled" and "repeat" fields
@@ -62,7 +66,7 @@ class InnerAlarmAdapter(
         val alarmSwitch: Switch = view.findViewById(R.id.alarmSwitch)
         val deleteBtn : ImageButton = view.findViewById(R.id.deleteBtn)
     }
-    private fun showEditAlarmDialog( alarmList: AlarmList,alarm : Alarm) {
+    private fun showEditAlarmDialog(alarmList: AlarmList, alarm : Alarm) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_alarm, null)
         val timePicker = dialogView.findViewById<TimePicker>(R.id.time_picker)
         timePicker.setIs24HourView(true)

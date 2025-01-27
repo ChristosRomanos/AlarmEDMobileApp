@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,6 +11,10 @@ import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alarmedmobileapp.Data.AlarmList
+import com.example.alarmedmobileapp.Data.Alarm
+import com.example.alarmedmobileapp.Data.Days
+import com.example.alarmedmobileapp.R
 
 class AlarmAdapter(
     private val context: Context,

@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Data
 
 class AlarmList(
     val title: String, // Name of the alarm list

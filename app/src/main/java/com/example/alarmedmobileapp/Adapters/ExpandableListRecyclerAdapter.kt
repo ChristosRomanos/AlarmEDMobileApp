@@ -1,4 +1,4 @@
-package com.example.alarmedmobileapp
+package com.example.alarmedmobileapp.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alarmedmobileapp.Data.ExpandableListData
+import com.example.alarmedmobileapp.R
 
 class ExpandableListRecyclerAdapter(
     private val context: Context,
