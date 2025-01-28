@@ -1,8 +1,8 @@
 package com.example.alarmedmobileapp.Adapters
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.AlarmList
-import com.example.alarmedmobileapp.Data.Days
+import com.example.alarmedmobileapp.Data.loadSoundFiles
 import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 import com.example.alarmedmobileapp.sampleAlarmLists
-import java.io.File
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -54,23 +53,21 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             super.onCreate(savedInstanceState)
 
             val recyclerView: RecyclerView = view.findViewById(R.id.mp3RecyclerView)
-            val mp3Folder = File(Environment.getExternalStorageDirectory(), "YourMp3Folder") // Change path
-            val mp3Files = mp3Folder.listFiles { file -> file.extension == "mp3" }?.toList() ?: emptyList()
+
+            // List of raw resource IDs
+            val soundFiles = loadSoundFiles(this.requireContext())
 
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = Mp3Adapter(mp3Files) { file ->
+            recyclerView.adapter = Mp3Adapter(soundFiles, this.requireContext()) { resourceId ->
                 // Handle Play Button Click
-                playMp3(file)
+                playMp3(resourceId)
             }
             return view
         }
 
-        private fun playMp3(file: File) {
-            MediaPlayer().apply {
-                setDataSource(file.absolutePath)
-                prepare()
-                start()
-            }
+        private fun playMp3(resourceId: Int) {
+            val mediaPlayer = MediaPlayer.create(this.requireContext(), resourceId)
+            mediaPlayer.start()
         }
     }
 

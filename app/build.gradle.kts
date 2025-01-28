@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation(libs.ui)
     implementation(libs.androidx.navigation.compose.v273)
     implementation(libs.androidx.core.ktx)
@@ -56,6 +57,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,23 +1,29 @@
 package com.example.alarmedmobileapp.Adapters
 
+import android.content.Context
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alarmedmobileapp.Data.SoundFile
 import com.example.alarmedmobileapp.R
-import java.io.File
 
-class Mp3Adapter(private val mp3Files: List<File>, private val onPlayClick: (File) -> Unit) :
-    RecyclerView.Adapter<Mp3Adapter.Mp3ViewHolder>() {
+class Mp3Adapter(
+    private val mp3Resources: List<SoundFile>,
+    private val context: Context,
+    private val onPlayClick: (Int) -> Unit
+) : RecyclerView.Adapter<Mp3Adapter.Mp3ViewHolder>() {
 
     private var selectedPosition: Int = -1
 
     inner class Mp3ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val playButton: ImageButton = itemView.findViewById(R.id.playButton)
         val songTitle: TextView = itemView.findViewById(R.id.songTitle)
-        val activeButton: ImageButton = itemView.findViewById(R.id.activeButton)
+        val activeButton: RadioButton = itemView.findViewById(R.id.activeButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Mp3ViewHolder {
@@ -27,14 +33,20 @@ class Mp3Adapter(private val mp3Files: List<File>, private val onPlayClick: (Fil
     }
 
     override fun onBindViewHolder(holder: Mp3ViewHolder, position: Int) {
-        val file = mp3Files[position]
+        val resourceId = mp3Resources[position]
 
-        // Set the song title
-        holder.songTitle.text = file.nameWithoutExtension
+        // Set a placeholder song title (you can customize this further)
+        holder.songTitle.text = resourceId.name
 
         // Play Button Click Listener
         holder.playButton.setOnClickListener {
-            onPlayClick(file)
+            val assetPath = resourceId.file
+            val assetManager = context.assets
+            val mediaPlayer = MediaPlayer()
+            val assetFileDescriptor = assetManager.openFd(assetPath)
+            mediaPlayer.setDataSource(assetFileDescriptor.fileDescriptor, assetFileDescriptor.startOffset, assetFileDescriptor.length)
+            mediaPlayer.prepare()
+            mediaPlayer.start()
         }
 
         // Active Button State
@@ -50,5 +62,5 @@ class Mp3Adapter(private val mp3Files: List<File>, private val onPlayClick: (Fil
         }
     }
 
-    override fun getItemCount(): Int = mp3Files.size
+    override fun getItemCount(): Int = mp3Resources.size
 }
