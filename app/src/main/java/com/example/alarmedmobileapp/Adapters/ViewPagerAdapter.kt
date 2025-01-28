@@ -1,6 +1,8 @@
 package com.example.alarmedmobileapp.Adapters
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 import com.example.alarmedmobileapp.sampleAlarmLists
+import java.io.File
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -42,8 +45,33 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
     }
 
 
-    class SoundsFragment : Fragment(R.layout.sounds) {
+    class SoundsFragment : Fragment() {
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val view = inflater.inflate(R.layout.sounds, container, false)
+            super.onCreate(savedInstanceState)
 
+            val recyclerView: RecyclerView = view.findViewById(R.id.mp3RecyclerView)
+            val mp3Folder = File(Environment.getExternalStorageDirectory(), "YourMp3Folder") // Change path
+            val mp3Files = mp3Folder.listFiles { file -> file.extension == "mp3" }?.toList() ?: emptyList()
+
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = Mp3Adapter(mp3Files) { file ->
+                // Handle Play Button Click
+                playMp3(file)
+            }
+            return view
+        }
+
+        private fun playMp3(file: File) {
+            MediaPlayer().apply {
+                setDataSource(file.absolutePath)
+                prepare()
+                start()
+            }
+        }
     }
 
     class EmergencyFragment : Fragment(R.layout.emergency) {
