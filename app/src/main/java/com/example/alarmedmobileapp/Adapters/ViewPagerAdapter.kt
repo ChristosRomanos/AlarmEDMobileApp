@@ -1,6 +1,5 @@
 package com.example.alarmedmobileapp.Adapters
 
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,14 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.AlarmList
+import com.example.alarmedmobileapp.Data.loadAlarmLists
 import com.example.alarmedmobileapp.Data.loadSoundFiles
-import com.example.alarmedmobileapp.MainActivity
+import com.example.alarmedmobileapp.Data.overwriteAlarmsJsonFile
 import com.example.alarmedmobileapp.R
-import com.example.alarmedmobileapp.sampleAlarmLists
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-
 
     override fun getItemCount(): Int = 4  // Total number of views
 
@@ -51,20 +49,16 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
         ): View? {
             val view = inflater.inflate(R.layout.sounds, container, false)
             super.onCreate(savedInstanceState)
-
+            val applyBtn: Button = view.findViewById(R.id.applyBtn)
             val recyclerView: RecyclerView = view.findViewById(R.id.mp3RecyclerView)
 
             // List of raw resource IDs
             val soundFiles = loadSoundFiles(this.requireContext())
-
+            applyBtn.isClickable = false
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = Mp3Adapter(soundFiles, this.requireContext()) { resourceId ->
-                // Handle Play Button Click
-                playMp3(resourceId)
-            }
+            recyclerView.adapter = Mp3Adapter(soundFiles, this.requireContext(), applyBtn)
             return view
         }
-
         private fun playMp3(resourceId: Int) {
             val mediaPlayer = MediaPlayer.create(this.requireContext(), resourceId)
             mediaPlayer.start()
@@ -80,15 +74,20 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
+            var alarms_changed=false
+            var sampleAlarmLists= loadAlarmLists(this.requireContext())
             val view = inflater.inflate(R.layout.alarms, container, false)
-            val addListContainer: LinearLayout = view.findViewById(R.id.addListContainer)
-            val addListButton: Button = addListContainer.findViewById(R.id.addListBtn)
-            val addListImageBtn: ImageButton = addListContainer.findViewById(R.id.imageAddListBtn)
+            val addListButton: Button = view.findViewById(R.id.addListBtn)
+            val addListImageBtn: ImageButton = view.findViewById(R.id.imageAddListBtn)
             val dynamicContainer: LinearLayout = view.findViewById(R.id.dynamicContainer)
             val alarmRecyclerView = view.findViewById<RecyclerView>(R.id.alarmRecyclerView)
+            val applyBtn :Button=view.findViewById(R.id.applyAlarmChangesBtn)
+
             alarmRecyclerView.layoutManager = LinearLayoutManager(context)
-            val alarmAdapter = AlarmAdapter(requireContext(), MainActivity.getAlarmLists())
+            val alarmAdapter = AlarmAdapter(requireContext(), sampleAlarmLists,applyBtn)
             alarmRecyclerView.adapter = alarmAdapter
+            applyBtn.isClickable=alarms_changed
+            applyBtn.isEnabled=alarms_changed
             addListImageBtn.setOnClickListener {
                 // Create a new row
                 val newRow = LayoutInflater.from(context).inflate(R.layout.dynamic_row, null)
@@ -109,10 +108,12 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                                 alarms = emptyList<Alarm>().toMutableList()
                             )
                         )
+                        alarmAdapter.notifyItemChanged(alarmAdapter.itemCount-1)
                         dynamicContainer.removeView(newRow)
                         addListImageBtn.isClickable = true
                         addListButton.isClickable = true
-                        alarmAdapter.notifyItemChanged(alarmRecyclerView.id)
+                        applyBtn.isClickable=true
+                        applyBtn.isEnabled=true
                     }
                 }
                 cancelBtn.setOnClickListener {
@@ -132,8 +133,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                 val acceptBtn = dynamicContainer.findViewById<Button>(R.id.rowConfirmBtn)
                 val cancelBtn = dynamicContainer.findViewById<Button>(R.id.rowCancelBtn)
                 val nameBox = dynamicContainer.findViewById<EditText>(R.id.rowEditText)
-
-
                 alarmRecyclerView.adapter = alarmAdapter
                 acceptBtn.setOnClickListener {
                     if (nameBox.text.isNotEmpty()) {
@@ -146,6 +145,9 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                         dynamicContainer.removeView(newRow)
                         addListImageBtn.isClickable = true
                         addListButton.isClickable = true
+                        alarms_changed=true
+                        applyBtn.isClickable=true
+                        applyBtn.isEnabled=true
                         alarmAdapter.notifyItemChanged(alarmRecyclerView.id)
                     }
                 }
@@ -154,6 +156,11 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                     addListImageBtn.isClickable = true
                     addListButton.isClickable = true
                 }
+            }
+            applyBtn.setOnClickListener{
+                overwriteAlarmsJsonFile(this.requireContext(),sampleAlarmLists)
+                it.isClickable=false
+                it.isEnabled=false
             }
             return view
         }

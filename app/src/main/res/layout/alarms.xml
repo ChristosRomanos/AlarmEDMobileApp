@@ -1,48 +1,76 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_height="match_parent">
 
     <!-- Add List Section -->
-    <LinearLayout
-        android:id="@+id/addListContainer"
-        android:layout_width="match_parent"
+
+
+    <ImageButton
+        android:id="@+id/imageAddListBtn"
+        android:layout_width="79dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:duplicateParentState="false"
+        app:layout_constraintBottom_toTopOf="@+id/dynamicContainer"
+        app:layout_constraintEnd_toStartOf="@+id/addListBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/addListBtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_marginEnd="45dp"
+        android:background="#FFFFFF"
+        android:gravity="left|center_vertical"
+        android:outlineProvider="none"
+        android:text="Add List"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageAddListBtn"
+        app:layout_constraintTop_toTopOf="@+id/imageAddListBtn" />
 
-        <ImageButton
-            android:id="@+id/imageAddListBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="#FFFFFF"
-            android:duplicateParentState="false"
-            app:srcCompat="@android:drawable/ic_input_add" />
-
-        <Button
-            android:id="@+id/addListBtn"
-            android:layout_width="341dp"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:gravity="left|center_vertical"
-            android:text="Add List"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/dynamicContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="8dp" />
 
     <!-- RecyclerView Section -->
+    <LinearLayout
+        android:id="@+id/dynamicContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/alarmRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageAddListBtn" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/applyAlarmChangesBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dynamicContainer" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/applyAlarmChangesBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="vertical"
+        android:outlineProvider="none"
+        android:text="Apply Changes"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

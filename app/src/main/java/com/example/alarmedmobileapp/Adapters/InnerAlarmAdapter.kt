@@ -45,9 +45,6 @@ class InnerAlarmAdapter(
         }
 
         // Handle click on repeat field (you can open a dialog or activity to select days)
-        holder.repeatTextView.setOnClickListener {
-            // TODO: Open a dialog to let the user select repeat days
-        }
         holder.deleteBtn.setOnClickListener{
             alarmList.alarms.remove(alarm)
             notifyItemRemoved(holder.adapterPosition)

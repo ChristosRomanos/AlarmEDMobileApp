@@ -1,0 +1,59 @@
+[
+  {
+    "title": "Morning Alarms",
+    "alarms": [
+      {
+        "hour": 6,
+        "min": 0,
+        "isEnabled": true,
+        "repeat": ["Monday", "Wednesday", "Friday"]
+      },
+      {
+        "hour": 6,
+        "min": 30,
+        "isEnabled": false,
+        "repeat": []
+      },
+      {
+        "hour": 7,
+        "min": 30,
+        "isEnabled": true,
+        "repeat": ["Tuesday", "Friday"]
+      }
+    ]
+  },
+  {
+    "title": "Work Alarms",
+    "alarms": [
+      {
+        "hour": 8,
+        "min": 0,
+        "isEnabled": true,
+        "repeat": ["Monday", "Wednesday", "Friday"]
+      },
+      {
+        "hour": 20,
+        "min": 30,
+        "isEnabled": true,
+        "repeat": []
+      }
+    ]
+  },
+  {
+    "title": "Weekend Alarms",
+    "alarms": [
+      {
+        "hour": 9,
+        "min": 0,
+        "isEnabled": true,
+        "repeat": ["Saturday", "Sunday"]
+      },
+      {
+        "hour": 10,
+        "min": 0,
+        "isEnabled": false,
+        "repeat": []
+      }
+    ]
+  }
+]

@@ -1,18 +1,22 @@
 [
   {
     "name": "australia-eas-alarm-267664",
-    "file": "australia-eas-alarm-267664.mp3"
+    "file": "australia-eas-alarm-267664.mp3",
+    "chosen": true
   },
   {
     "name": "eas-alarm-phone-alarm-262882",
-    "file": "eas-alarm-phone-alarm-262882.mp3"
+    "file": "eas-alarm-phone-alarm-262882.mp3",
+    "chosen": false
   },
   {
     "name": "lofi-alarm-clock-243766",
-    "file": "lofi-alarm-clock-243766.mp3"
+    "file": "lofi-alarm-clock-243766.mp3",
+    "chosen": false
   },
   {
     "name": "usa-eas-alarm-249125",
-    "file": "usa-eas-alarm-249125.mp3"
+    "file": "usa-eas-alarm-249125.mp3",
+    "chosen": false
   }
 ]

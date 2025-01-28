@@ -1,5 +1,6 @@
 package com.example.alarmedmobileapp
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -15,68 +16,11 @@ import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Days
+import com.example.alarmedmobileapp.Data.loadAlarmLists
 import java.time.LocalDate
 import java.time.LocalTime
 
-var sampleAlarmLists = listOf(
-    AlarmList(
-        title = "Morning Alarms",
-        alarms = listOf(
-            Alarm(
-                hour=6,
-                min=0,
-                isEnabled = true,
-                repeat = listOf(Days.Monday, Days.Wednesday, Days.Friday).toMutableList() // Repeat on specific days
-            ),
-            Alarm(
-                hour=6,
-                min=30,
-                isEnabled = false,
-                repeat = listOf<Days>().toMutableList() // No repeat, only once
-            ),
-            Alarm(
-                hour =7,
-                min=30,
-                isEnabled = true,
-                repeat = listOf(Days.Tuesday, Days.Friday).toMutableList() // Repeat on specific days
-            )
-        ).toMutableList()
-    ),
-    AlarmList(
-        title = "Work Alarms",
-        alarms = listOf(
-            Alarm(
-                hour = 8,
-                min=0,
-                isEnabled = true,
-                repeat = listOf(Days.Monday, Days.Wednesday, Days.Friday).toMutableList() // Repeat on specific days
-            ),
-            Alarm(
-                hour=20,
-                min=30,
-                isEnabled = true,
-                repeat = listOf<Days>().toMutableList() // No repeat, only once
-            )
-        ).toMutableList()
-    ),
-    AlarmList(
-        title = "Weekend Alarms",
-        alarms = listOf(
-            Alarm(
-                hour=9,
-                min=0,
-                isEnabled = true,
-                repeat = listOf(Days.Saturday, Days.Sunday).toMutableList() // Weekend repeat
-            ),
-            Alarm(
-                hour=10,
-                min=0,
-                isEnabled = false,
-                repeat = listOf<Days>().toMutableList() // No repeat, only once
-            )
-        ).toMutableList()
-    )
-).toMutableList()
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager2: ViewPager2
@@ -89,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.ok)
         var button =findViewById<ImageButton>(R.id.btnMain)
         var recent :Alarm
+        var sampleAlarmLists = loadAlarmLists(this)
         if (sampleAlarmLists.isNotEmpty()&& sampleAlarmLists.get(0).alarms.isNotEmpty()) {
             recent = sampleAlarmLists.get(0).alarms.get(0)
             var time = Int.MAX_VALUE
@@ -175,11 +120,6 @@ class MainActivity : AppCompatActivity() {
             button.setBackgroundColor(Color.GREEN)
             button.isClickable=false
             viewPager2.currentItem = 3  // Go to EmergencyFragment
-        }
-    }
-    companion object {
-        fun getAlarmLists(): MutableList<AlarmList> {
-            return sampleAlarmLists
         }
     }
 

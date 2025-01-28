@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -18,18 +17,14 @@ import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.R
-import org.w3c.dom.Text
 
 class AlarmAdapter(
     private val context: Context,
-    private var alarmLists: MutableList<AlarmList> // Each AlarmList contains a name and a list of alarms
+    private var alarmLists: MutableList<AlarmList>, // Each AlarmList contains a name and a list of alarms
+    applyBtn: Button
 ) : RecyclerView.Adapter<AlarmAdapter.AlarmListViewHolder>() {
-
+    val applyBtn=applyBtn
     private val expandedStates = mutableSetOf<Int>() // Tracks which lists are expanded
-    lateinit var addListContainer : LinearLayout
-    lateinit var addListButton: Button
-    lateinit var addListImageBtn: ImageButton
-    lateinit var dynamicContainer: LinearLayout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmListViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.alarm_list_item, parent, false)
 
@@ -66,12 +61,13 @@ class AlarmAdapter(
         }
         holder.deleteListBtn.setOnClickListener{
             alarmLists.removeAt(holder.adapterPosition)
-            notifyItemRemoved(holder.adapterPosition)
+            alarmAdapter.notifyItemRemoved(holder.adapterPosition)
+            alarmAdapter.notifyItemRangeChanged(position, alarmLists.size)
+            applyBtn.isClickable=true
+            applyBtn.isEnabled=true
         }
         holder.addBtn.setOnClickListener{
-            showAddAlarmDialog(alarmList)
-            notifyItemChanged(holder.adapterPosition)
-
+            showAddAlarmDialog(alarmList,alarmAdapter)
         }
     }
 
@@ -86,7 +82,7 @@ class AlarmAdapter(
         val addBtn: ImageButton =view.findViewById(R.id.addBtn)
     }
 
-    private fun showAddAlarmDialog( alarmList: AlarmList) {
+    private fun showAddAlarmDialog( alarmList: AlarmList,alarmAdapter: InnerAlarmAdapter) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_alarm, null)
         val timePicker = dialogView.findViewById<TimePicker>(R.id.time_picker)
         timePicker.setIs24HourView(true)
@@ -127,6 +123,9 @@ class AlarmAdapter(
                 alarmList.alarms.sortBy { alarm ->
                     alarm.hour * 60 + alarm.min
                 }
+                alarmAdapter.notifyDataSetChanged()
+                applyBtn.isClickable=true
+                applyBtn.isEnabled=true
                 // Convert time to total minutes for comparison
             }
             .setNegativeButton("Cancel", null)
