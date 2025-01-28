@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +18,7 @@ import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
-
+import com.example.alarmedmobileapp.sampleAlarmLists
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
@@ -52,19 +56,82 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             savedInstanceState: Bundle?
         ): View? {
             val view = inflater.inflate(R.layout.alarms, container, false)
-
+            val addListContainer: LinearLayout = view.findViewById(R.id.addListContainer)
+            val addListButton: Button = addListContainer.findViewById(R.id.addListBtn)
+            val addListImageBtn: ImageButton = addListContainer.findViewById(R.id.imageAddListBtn)
+            val dynamicContainer: LinearLayout = view.findViewById(R.id.dynamicContainer)
             val alarmRecyclerView = view.findViewById<RecyclerView>(R.id.alarmRecyclerView)
             alarmRecyclerView.layoutManager = LinearLayoutManager(context)
-
-            // Sample data for alarm lists
-
-
-
             val alarmAdapter = AlarmAdapter(requireContext(), MainActivity.getAlarmLists())
             alarmRecyclerView.adapter = alarmAdapter
+            addListImageBtn.setOnClickListener {
+                // Create a new row
+                val newRow = LayoutInflater.from(context).inflate(R.layout.dynamic_row, null)
+                // Add row to the dynamic container
+                dynamicContainer.addView(newRow)
+                addListImageBtn.isClickable = false
+                addListButton.isClickable = false
+                val acceptBtn = dynamicContainer.findViewById<Button>(R.id.rowConfirmBtn)
+                val cancelBtn = dynamicContainer.findViewById<Button>(R.id.rowCancelBtn)
+                val nameBox = dynamicContainer.findViewById<EditText>(R.id.rowEditText)
 
+                alarmRecyclerView.adapter = alarmAdapter
+                acceptBtn.setOnClickListener {
+                    if (nameBox.text.isNotEmpty()) {
+                        sampleAlarmLists.add(
+                            AlarmList(
+                                title = nameBox.text.toString(),
+                                alarms = emptyList<Alarm>().toMutableList()
+                            )
+                        )
+                        dynamicContainer.removeView(newRow)
+                        addListImageBtn.isClickable = true
+                        addListButton.isClickable = true
+                        alarmAdapter.notifyItemChanged(alarmRecyclerView.id)
+                    }
+                }
+                cancelBtn.setOnClickListener {
+                    dynamicContainer.removeView(newRow)
+                    addListImageBtn.isClickable = true
+                    addListButton.isClickable = true
+                }
+            }
+            // Sample data for alarm lists
+            addListButton.setOnClickListener {
+                // Create a new row
+                val newRow = LayoutInflater.from(context).inflate(R.layout.dynamic_row, null)
+                // Add row to the dynamic container
+                dynamicContainer.addView(newRow)
+                addListImageBtn.isClickable = false
+                addListButton.isClickable = false
+                val acceptBtn = dynamicContainer.findViewById<Button>(R.id.rowConfirmBtn)
+                val cancelBtn = dynamicContainer.findViewById<Button>(R.id.rowCancelBtn)
+                val nameBox = dynamicContainer.findViewById<EditText>(R.id.rowEditText)
+
+
+                alarmRecyclerView.adapter = alarmAdapter
+                acceptBtn.setOnClickListener {
+                    if (nameBox.text.isNotEmpty()) {
+                        sampleAlarmLists.add(
+                            AlarmList(
+                                title = nameBox.text.toString(),
+                                alarms = emptyList<Alarm>().toMutableList()
+                            )
+                        )
+                        dynamicContainer.removeView(newRow)
+                        addListImageBtn.isClickable = true
+                        addListButton.isClickable = true
+                        alarmAdapter.notifyItemChanged(alarmRecyclerView.id)
+                    }
+                }
+                cancelBtn.setOnClickListener {
+                    dynamicContainer.removeView(newRow)
+                    addListImageBtn.isClickable = true
+                    addListButton.isClickable = true
+                }
+            }
             return view
         }
-        }
+    }
     }
 

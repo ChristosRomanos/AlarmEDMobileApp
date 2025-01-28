@@ -4,8 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.app.AlertDialog
@@ -15,6 +18,7 @@ import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.R
+import org.w3c.dom.Text
 
 class AlarmAdapter(
     private val context: Context,
@@ -22,9 +26,13 @@ class AlarmAdapter(
 ) : RecyclerView.Adapter<AlarmAdapter.AlarmListViewHolder>() {
 
     private val expandedStates = mutableSetOf<Int>() // Tracks which lists are expanded
-
+    lateinit var addListContainer : LinearLayout
+    lateinit var addListButton: Button
+    lateinit var addListImageBtn: ImageButton
+    lateinit var dynamicContainer: LinearLayout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmListViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.alarm_list_item, parent, false)
+
         return AlarmListViewHolder(view)
     }
 
@@ -62,6 +70,8 @@ class AlarmAdapter(
         }
         holder.addBtn.setOnClickListener{
             showAddAlarmDialog(alarmList)
+            notifyItemChanged(holder.adapterPosition)
+
         }
     }
 
@@ -75,6 +85,7 @@ class AlarmAdapter(
         val deleteListBtn : ImageButton =view.findViewById(R.id.deleteListBtn)
         val addBtn: ImageButton =view.findViewById(R.id.addBtn)
     }
+
     private fun showAddAlarmDialog( alarmList: AlarmList) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_alarm, null)
         val timePicker = dialogView.findViewById<TimePicker>(R.id.time_picker)
@@ -117,7 +128,6 @@ class AlarmAdapter(
                     alarm.hour * 60 + alarm.min
                 }
                 // Convert time to total minutes for comparison
-                notifyDataSetChanged()
             }
             .setNegativeButton("Cancel", null)
             .create()

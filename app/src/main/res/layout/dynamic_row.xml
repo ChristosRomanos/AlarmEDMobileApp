@@ -1,0 +1,35 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical">
+
+    <!-- TextBox for input -->
+    <EditText
+        android:id="@+id/rowEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Enter name"
+        android:padding="8dp"
+        android:background="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Tick Button -->
+    <Button
+        android:id="@+id/rowConfirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✓"
+        android:backgroundTint="@android:color/holo_green_light" />
+
+    <!-- Cancel Button -->
+    <Button
+        android:id="@+id/rowCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:backgroundTint="@android:color/holo_red_light" />
+</LinearLayout>
