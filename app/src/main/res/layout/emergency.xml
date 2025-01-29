@@ -1,52 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="600dp">
+    android:layout_height="match_parent"
+    android:background="#C90D0A0A"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="162dp"
-        android:layout_height="162dp"
-        android:background="#2AA92E"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/baseline_alarm_24"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="268dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Tasks"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/imageButton8"
-        android:layout_width="162dp"
-        android:layout_height="162dp"
-        android:layout_marginBottom="88dp"
-        android:background="#2AA92E"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:srcCompat="@drawable/baseline_music_note_24"
-        tools:layout_editor_absoluteX="16dp" />
+    <GridLayout
+        android:layout_width="385dp"
+        android:layout_height="558dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:padding="8dp"
+        android:rowCount="4"
+        android:rowOrderPreserved="false">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
 
-    <ImageButton
-        android:id="@+id/imageButton10"
-        android:layout_width="162dp"
-        android:layout_height="162dp"
-        android:background="#2AA92E"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/baseline_games_24"
-        tools:layout_editor_absoluteX="233dp"
-        tools:layout_editor_absoluteY="268dp" />
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_calculate_24" />
 
-    <ImageButton
-        android:id="@+id/imageButton11"
-        android:layout_width="162dp"
-        android:layout_height="162dp"
-        android:layout_marginBottom="88dp"
-        android:background="#2AA92E"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton10"
-        app:srcCompat="@drawable/baseline_settings_24"
-        tools:layout_editor_absoluteX="233dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MATHS"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MEMORY"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ORDER"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="REPEAT"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BARCODE"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="SHAKE"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="REWRITE"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:orientation="vertical"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:layout_margin="8dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_memory_24" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MATCH"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </GridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Way chosen: Randomly"
+        android:textSize="16sp"></TextView>
+
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:text="Amount of tasks needed to be completed: 3"
+        android:textSize="16sp"></TextView>
+</LinearLayout>
