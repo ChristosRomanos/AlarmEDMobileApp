@@ -1,6 +1,5 @@
 package com.example.alarmedmobileapp
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -14,7 +13,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
-import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.Data.loadAlarmLists
 import java.time.LocalDate
@@ -34,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         var button =findViewById<ImageButton>(R.id.btnMain)
         var recent :Alarm
         var sampleAlarmLists = loadAlarmLists(this)
+        println(sampleAlarmLists)
         if (sampleAlarmLists.isNotEmpty()&& sampleAlarmLists.get(0).alarms.isNotEmpty()) {
             recent = sampleAlarmLists.get(0).alarms.get(0)
             var time = Int.MAX_VALUE

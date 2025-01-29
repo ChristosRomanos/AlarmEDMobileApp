@@ -29,8 +29,8 @@ data class Alarm(
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
                                 repeat.remove(day)
                                 repeat.addFirst(day)
-                                return ChronoUnit.MINUTES.between(LocalDate.now(),
-                                    LocalDate.now().plusDays(i.toLong()).atTime(hour,min)).toInt()
+                                return ChronoUnit.MINUTES.between(LocalDateTime.now(),
+                                    LocalDate.now().atTime(hour,min)).toInt()
                             }
                         }
                     }else{
