@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C90D0A0A"
+    android:background="#EA1A1919"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp">
@@ -13,6 +13,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Tasks"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -23,17 +24,19 @@
         android:columnCount="2"
         android:padding="8dp"
         android:rowCount="4"
-        android:rowOrderPreserved="false">
+        android:rowOrderPreserved="false"
+        android:textColor="@android:color/white">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
@@ -46,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="MATHS"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -56,94 +60,105 @@
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="MEMORY"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="ORDER"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="REPEAT"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="BARCODE"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -153,22 +168,24 @@
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="SHAKE"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -178,22 +195,24 @@
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="REWRITE"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -203,22 +222,24 @@
             android:layout_height="0dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:orientation="vertical"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:background="#474646"
             android:elevation="4dp"
-            android:layout_margin="8dp">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_memory_24" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="MATCH"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -228,11 +249,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Way chosen: Randomly"
+        android:textColor="@android:color/white"
         android:textSize="16sp"></TextView>
 
     <TextView
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:text="Amount of tasks needed to be completed: 3"
+        android:textColor="@android:color/white"
         android:textSize="16sp"></TextView>
 </LinearLayout>

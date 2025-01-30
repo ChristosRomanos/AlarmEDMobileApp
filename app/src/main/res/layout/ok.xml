@@ -11,7 +11,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="#3FFF01"
+        android:background="#22FBE8"
         android:gravity="center"
         android:padding="10dp"
         android:textColor="@android:color/white"
@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#22FBE8"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_home_24" />
 
@@ -59,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#474646"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_alarm_24" />
 
@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#474646"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_music_note_24" />
 
@@ -77,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#474646"
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_games_24" />
     </LinearLayout>

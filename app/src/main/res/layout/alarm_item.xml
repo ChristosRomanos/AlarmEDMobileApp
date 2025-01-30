@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#E2474646"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="8dp">
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_weight="0.05"
-        android:background="#FFFFFF"
+        android:background="#00474646"
+        android:hapticFeedbackEnabled="false"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <TextView
@@ -21,8 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="6:00 AM"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/repeatTextView"
@@ -31,7 +35,7 @@
         android:clickable="true"
         android:padding="8dp"
         android:text="Once"
-        android:textColor="#2AA92E" />
+        android:textColor="@color/white" />
 
     <Switch
         android:id="@+id/alarmSwitch"

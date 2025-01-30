@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:background="#E2474646"
     android:gravity="center_vertical"
-    android:padding="8dp"
-    android:background="#FFFFFF">
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <!-- Play Button -->
     <ImageButton
@@ -13,7 +13,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
+        android:background="#00474646"
         android:contentDescription="Play"
         android:src="@drawable/baseline_play_arrow_24"
         app:srcCompat="@drawable/baseline_play_arrow_24" />
@@ -24,16 +24,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Song Title"
-        android:textSize="16sp"
-        android:textColor="#000000"
         android:ellipsize="end"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:text="Song Title"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 
     <!-- Active Circle Button -->
     <RadioButton
         android:id="@+id/activeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="16dp"
+        android:backgroundTint="#54FFEF"
+        android:backgroundTintMode="src_in" />
 </LinearLayout>
