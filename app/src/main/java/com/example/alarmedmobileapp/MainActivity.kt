@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.alarmedmobileapp.Adapters.MatchAdapter
 import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.Days
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> ViewPagerAdapter.MainFragment()
                     1 -> ViewPagerAdapter.AlarmFragment()
                     2 -> ViewPagerAdapter.SoundsFragment()
-                    3 -> ViewPagerAdapter.EmergencyFragment()
+                    3 -> MatchAdapter()
                     else -> ViewPagerAdapter.MainFragment() // Default case
                 }
             }
