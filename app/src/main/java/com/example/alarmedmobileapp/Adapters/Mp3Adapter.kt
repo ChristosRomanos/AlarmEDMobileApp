@@ -20,11 +20,12 @@ class Mp3Adapter(
     private val applyBtn: Button
 ) : RecyclerView.Adapter<Mp3Adapter.Mp3ViewHolder>() {
 
-    private var selectedPosition: Int = -1
+    lateinit var curentMediaPlayer: MediaPlayer
     var playing=false
     lateinit var chosen_song_holder : Mp3ViewHolder
     var initial_chosen_song : SoundFile? =null
     var chosen_song : SoundFile? =null
+    lateinit var songplayed: Mp3ViewHolder
 
     inner class Mp3ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val playButton: ImageButton = itemView.findViewById(R.id.playButton)
@@ -53,29 +54,41 @@ class Mp3Adapter(
         // Set a placeholder song title (you can customize this further)
         holder.songTitle.text = resourceId.name
         val mediaPlayer = MediaPlayer()
+        val assetPath = resourceId.file
+        val assetManager = context.assets
+        val assetFileDescriptor = assetManager.openFd(assetPath)
+        mediaPlayer.setDataSource(
+            assetFileDescriptor.fileDescriptor,
+            assetFileDescriptor.startOffset,
+            assetFileDescriptor.length
+        )
         // Play Button Click Listener
         holder.playButton.setOnClickListener {
             if(!playing) {
-                val assetPath = resourceId.file
-                val assetManager = context.assets
-                val assetFileDescriptor = assetManager.openFd(assetPath)
+                songplayed=holder
+                curentMediaPlayer=mediaPlayer
                 holder.playButton.setImageResource(R.drawable.baseline_pause_24)
-                mediaPlayer.setDataSource(
-                    assetFileDescriptor.fileDescriptor,
-                    assetFileDescriptor.startOffset,
-                    assetFileDescriptor.length
-                )
                 mediaPlayer.prepare()
                 mediaPlayer.start()
                 playing=true
             }else{
-                mediaPlayer.stop()
-                playing=false
-                holder.playButton.setImageResource(R.drawable.baseline_play_arrow_24)
+                if (songplayed==holder) {
+                    mediaPlayer.stop()
+                    playing = false
+                    holder.playButton.setImageResource(R.drawable.baseline_play_arrow_24)
+                }
+                else{
+                    curentMediaPlayer.stop()
+                    curentMediaPlayer=mediaPlayer
+                    songplayed.playButton.setImageResource(R.drawable.baseline_play_arrow_24)
+                    songplayed=holder
+                    holder.playButton.setImageResource(R.drawable.baseline_pause_24)
+                    mediaPlayer.prepare()
+                    mediaPlayer.start()
+                }
             }
         }
         applyBtn.setOnClickListener{
-            println(initial_chosen_song?.name +"  :  "+chosen_song?.name)
             overwriteSoundsJsonFile(context,mp3Resources,"sounds.json")
             initial_chosen_song=resourceId
             notifyItemChanged(holder.adapterPosition)
