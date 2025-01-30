@@ -12,11 +12,12 @@ import android.widget.Button
 import com.example.alarmedmobileapp.R
 
 
-class MatchAdapter: Fragment() {
-
+class MatchAdapter(difficulty:Int): Fragment() {
+    val difficulty=difficulty
     override fun onCreateView(layoutInflater: LayoutInflater,container:ViewGroup?, savedInstanceState: Bundle?): View?  {
         super.onCreate(savedInstanceState)
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
+
 
         val images: MutableList<Int> =
             mutableListOf(R.drawable.anchor, R.drawable.danger, R.drawable.up,

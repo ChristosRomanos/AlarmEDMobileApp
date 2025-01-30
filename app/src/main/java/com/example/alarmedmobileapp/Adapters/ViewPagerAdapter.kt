@@ -32,7 +32,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             0 -> MainFragment()
             1 -> AlarmFragment()
             2 -> SoundsFragment()
-            3 -> MatchAdapter()
+            3 -> MatchAdapter(1)
             else -> throw IllegalStateException("Unexpected position $position")
         }
     }
