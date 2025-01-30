@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> ViewPagerAdapter.MainFragment()
                     1 -> ViewPagerAdapter.AlarmFragment()
                     2 -> ViewPagerAdapter.SoundsFragment()
-                    3 -> MatchAdapter()
+                    3 -> MatchAdapter(3)
                     else -> ViewPagerAdapter.MainFragment() // Default case
                 }
             }
