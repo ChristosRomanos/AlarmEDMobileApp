@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.alarmedmobileapp.Adapters.MatchAdapter
+import com.example.alarmedmobileapp.Adapters.MathGameAdapter
+import com.example.alarmedmobileapp.Adapters.OrderAdapter
+import com.example.alarmedmobileapp.Adapters.Repeat
 import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.Days
@@ -19,10 +22,11 @@ import com.example.alarmedmobileapp.Data.loadAlarmLists
 import java.time.LocalDate
 import java.time.LocalTime
 
-
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewPager2: ViewPager2
+    companion object {
+         lateinit var viewPager2: ViewPager2
+    }
     private lateinit var fragmentAdapter: FragmentStateAdapter
     private lateinit var footerButtons: LinearLayout
     private lateinit var header: TextView
@@ -82,9 +86,12 @@ class MainActivity : AppCompatActivity() {
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> ViewPagerAdapter.MainFragment()
-                    1 -> ViewPagerAdapter.AlarmFragment()
-                    2 -> ViewPagerAdapter.SoundsFragment()
-                    3 -> MatchAdapter(3)
+//                    1 -> ViewPagerAdapter.AlarmFragment()
+//                    2 -> ViewPagerAdapter.SoundsFragment()
+//                    3 -> ViewPagerAdapter.EmergencyFragment()
+                    1 -> MatchAdapter(3)
+                    2 -> MathGameAdapter()
+                    3 -> Repeat(1)
                     else -> ViewPagerAdapter.MainFragment() // Default case
                 }
             }
