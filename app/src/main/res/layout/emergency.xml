@@ -28,6 +28,7 @@
         android:textColor="@android:color/white">
 
         <LinearLayout
+            android:id="@+id/mathsBtnLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -39,6 +40,7 @@
             android:padding="8dp">
 
             <ImageButton
+                android:id="@+id/mathsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:scaleType="fitCenter"

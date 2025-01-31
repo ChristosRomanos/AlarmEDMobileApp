@@ -13,12 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.loadAlarmLists
 import com.example.alarmedmobileapp.Data.loadSoundFiles
 import com.example.alarmedmobileapp.Data.overwriteAlarmsJsonFile
+import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 
 
@@ -32,7 +34,10 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             0 -> MainFragment()
             1 -> AlarmFragment()
             2 -> SoundsFragment()
-            3 -> MatchAdapter(3)
+            3 -> EmergencyFragment()
+            4 -> MatchAdapter(3)
+            5 -> MathGameAdapter()
+            6 -> OrderAdapter(3)
             else -> throw IllegalStateException("Unexpected position $position")
         }
     }
@@ -65,9 +70,22 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
         }
     }
 
-    class EmergencyFragment : Fragment(R.layout.emergency) {
-
+    class EmergencyFragment : Fragment() {
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val view = inflater.inflate(R.layout.emergency, container, false)
+            val mathsButton :ImageButton =view.findViewById(R.id.mathsBtn)
+            mathsButton.setOnClickListener{
+                MainActivity.viewPager2.currentItem=4
+                MainActivity.viewPager2.setCurrentItem(4,true)
+                println(MainActivity.viewPager2.currentItem)
+            }
+            return view
+        }
     }
+
 
     class AlarmFragment : Fragment() {
         override fun onCreateView(
