@@ -11,14 +11,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.isVisible
 import com.example.alarmedmobileapp.R
+import kotlin.properties.Delegates
 
 class OrderAdapter(difficulty:Int): Fragment() {
 
-    // val difficulty=difficulty
-    private val numbers = (1..8).shuffled().toMutableList()
-    private lateinit var buttons: Array<Button>
-    private var firstClickIndex: Int? = null
+    val difficulty=difficulty
+    private val numbers = (1..(8+4*(difficulty-1))).shuffled().toMutableList()
+    private lateinit var buttons: MutableList<Button>
+    private var firstClicked=-1
+    var buttons_locked=0
 
     override fun onCreateView(layoutInflater: LayoutInflater,container:ViewGroup?, savedInstanceState: Bundle?): View?  {
         super.onCreate(savedInstanceState)
@@ -36,18 +39,66 @@ class OrderAdapter(difficulty:Int): Fragment() {
         val button8: Button = view.findViewById(R.id.button8)
         // val button9: Button = view.findViewById(R.id.button9)
 
-        val buttons = arrayOf(button1, button2, button3, button4, button5, button6, button7, button8)
+        buttons = mutableListOf(button1, button2, button3, button4, button5, button6, button7, button8)
 
-        var firstClicked = -1
+        val color=button1.background
         var secondClicked = -1
 
         // val handler=Handler(Looper.getMainLooper())
+        if (difficulty > 1) {
 
 
+            val button9: Button = view.findViewById(R.id.button9)
+            button9.isClickable = true
+            button9.isEnabled = true
+            button9.isVisible = true
 
-        for (i in buttons.indices){
+            val button10: Button = view.findViewById(R.id.button10)
+            button10.isClickable = true
+            button10.isEnabled = true
+            button10.isVisible = true
+
+            val button11: Button = view.findViewById(R.id.button11)
+            button11.isClickable=true
+            button11.isEnabled=true
+            button11.isVisible=true
+
+            val button12:Button=view.findViewById(R.id.button12)
+            button12.isClickable=true
+            button12.isEnabled=true
+            button12.isVisible=true
+            buttons.addAll(listOf(button9,button10,button11,button12))
+        }
+        if(difficulty>2){
+
+            val button13:Button=view.findViewById(R.id.button13)
+            button13.isClickable=true
+            button13.isEnabled=true
+            button13.isVisible=true
+
+            val button14:Button=view.findViewById(R.id.button14)
+            button14.isClickable=true
+            button14.isEnabled=true
+            button14.isVisible=true
+
+            val button15:Button=view.findViewById(R.id.button15)
+            button15.isClickable=true
+            button15.isEnabled=true
+            button15.isVisible=true
+
+            val button16:Button=view.findViewById(R.id.button16)
+            button16.isClickable=true
+            button16.isEnabled=true
+            button16.isVisible=true
+
+            buttons.addAll(listOf(button13,button14,button15,button16))
+        }
+
+
+        for (i in 0..buttons.size-1){
             buttons[i].text = numbers[i].toString()
-            updateButtonColor(buttons[i], i)
+            buttons[i].setTextColor(Color.WHITE)
+//            updateButtonColor(buttons[i], i)
 
             buttons[i].setOnClickListener{
                 if(firstClicked == -1){
@@ -55,44 +106,58 @@ class OrderAdapter(difficulty:Int): Fragment() {
                     buttons[i].setBackgroundColor(Color.GRAY)
             } else if (secondClicked == -1 && i != firstClicked){
                     secondClicked = i
-                    buttons[i].setBackgroundColor(Color.GRAY)
+                    buttons[i].background=(color)
+                    buttons[firstClicked].background=color
 
-                    if (canSwap(firstClicked,secondClicked, 3)) {
+                    if (canSwap(firstClicked,secondClicked, 4)) {
                         val temp = buttons[firstClicked].text
                         buttons[firstClicked].text = buttons[secondClicked].text
                         buttons[secondClicked].text = temp
+                        checkOrder(i,firstClicked)
+
                     }
 
                     firstClicked = -1
                     secondClicked = -1
 
-                    checkOrder(buttons)
                 }
             }
         }
         return view
     }
-    private fun checkOrder(buttons: Array<Button>){
-        var isOrdered = true;
-        for (i in buttons.indices){
-            if(buttons[i].text.toString().toInt() != i+1)
-                isOrdered = false
-                break
-        }
-        if(isOrdered){
-            println("Game Complete")
-        }
+    private fun checkOrder(i:Int,j:Int) {
+        if (i < j) {
+            if (i == buttons_locked && buttons[i].text.toString()
+                    .equals((buttons_locked + 1).toString())
+            ) {
+                buttons[i].isClickable = false
+                buttons[i].setBackgroundColor(Color.CYAN)
+                buttons_locked += 1
+            }
+            if (j == buttons_locked && buttons[j].text.toString()
+                    .equals((buttons_locked + 1).toString())
+            ) {
+                buttons[j].isClickable = false
+                buttons[j].setBackgroundColor(Color.CYAN)
+                buttons_locked += 1
+            }
+        } else {
+            if (j == buttons_locked && buttons[j].text.toString()
+                    .equals((buttons_locked + 1).toString())
+            ) {
+                buttons[j].isClickable = false
+                buttons[j].setBackgroundColor(Color.CYAN)
+                buttons_locked += 1
 
-        for(index in buttons.indices){
-            updateButtonColor(buttons[index], index)
-        }
-    }
+            }
+            if (i == buttons_locked && buttons[i].text.toString()
+                    .equals((buttons_locked + 1).toString())
+            ) {
+                buttons[i].isClickable = false
+                buttons[i].setBackgroundColor(Color.CYAN)
+                buttons_locked += 1
 
-    private fun updateButtonColor(button: Button, index: Int){
-        if(button.text.toString().toInt() == index + 1){
-            button.setBackgroundColor(Color.CYAN)
-        }else{
-            button.setBackgroundColor(Color.TRANSPARENT)
+            }
         }
     }
 
@@ -102,8 +167,8 @@ class OrderAdapter(difficulty:Int): Fragment() {
         val col1 = firstIndex % columnNum
         val col2 = secondIndex % columnNum
 
-        val isHorizontalNeighbour = kotlin.math.abs(firstIndex - secondIndex) == 1
-        val isVerticalNeighbour = row1 == row2 || col1 == col2
+        val isHorizontalNeighbour = kotlin.math.abs(col1 - col2) == 1 && row1 == row2
+        val isVerticalNeighbour = kotlin.math.abs(row1 - row2) == 1 && col1 == col2
 
         return isHorizontalNeighbour || isVerticalNeighbour
     }
