@@ -97,6 +97,7 @@ class OrderAdapter(difficulty:Int): Fragment() {
 
         for (i in 0..buttons.size-1){
             buttons[i].text = numbers[i].toString()
+            buttons[i].textSize= 32.0F
             buttons[i].setTextColor(Color.WHITE)
 //            updateButtonColor(buttons[i], i)
 
