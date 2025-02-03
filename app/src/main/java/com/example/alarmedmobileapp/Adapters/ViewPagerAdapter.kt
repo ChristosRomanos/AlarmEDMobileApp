@@ -36,7 +36,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             2 -> SoundsFragment()
             3 -> EmergencyFragment()
             4 -> MatchAdapter(3)
-            5 -> MathGameAdapter()
+            5 -> MathGameAdapter(3)
             6 -> OrderAdapter(3)
             else -> throw IllegalStateException("Unexpected position $position")
         }
