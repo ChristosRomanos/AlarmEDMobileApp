@@ -46,9 +46,9 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
 
     private fun generateQuestion() {
         val (numRange, operators) = when (difficulty) {
-            1 -> 1..10 to listOf("+")
-            2 -> 1..20 to listOf("+", "-")
-            3 -> 1..50 to listOf("+", "-", "*")
+            1 -> 10..50 to listOf("+")
+            2 -> 1..15 to listOf("-", "*")
+            3 -> 10..50 to listOf("*")
             else -> 1..10 to listOf("+")
         }
 

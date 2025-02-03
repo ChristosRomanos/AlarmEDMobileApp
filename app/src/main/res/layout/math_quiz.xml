@@ -2,30 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#EA1A1919"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Difficulty:"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <Spinner
-        android:id="@+id/difficultySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:text="Question will appear here"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:padding="16dp"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/answerEditText"
@@ -33,21 +23,24 @@
         android:layout_height="wrap_content"
         android:hint="Enter your answer"
         android:inputType="number"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:layout_marginTop="16dp"
         android:padding="8dp"
-        android:layout_marginTop="16dp"/>
+        android:text="Submit" />
 
     <TextView
         android:id="@+id/scoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Score: 0"
-        android:textSize="18sp"
-        android:layout_marginTop="16dp"/>
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>
