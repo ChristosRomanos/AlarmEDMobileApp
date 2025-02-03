@@ -97,25 +97,33 @@ class OrderAdapter(difficulty:Int): Fragment() {
 
         for (i in 0..buttons.size-1){
             buttons[i].text = numbers[i].toString()
-            buttons[i].textSize= 32.0F
             buttons[i].setTextColor(Color.WHITE)
 //            updateButtonColor(buttons[i], i)
 
-            buttons[i].setOnClickListener{
-                if(firstClicked == -1){
+            buttons[i].setOnClickListener {
+                if (firstClicked == -1) {
                     firstClicked = i
                     buttons[i].setBackgroundColor(Color.GRAY)
-            } else if (secondClicked == -1 && i != firstClicked){
+                } else if (secondClicked == -1 && i != firstClicked) {
                     secondClicked = i
-                    buttons[i].background=(color)
-                    buttons[firstClicked].background=color
+                    buttons[i].background = (color)
+                    buttons[firstClicked].background = color
 
-                    if (canSwap(firstClicked,secondClicked, 4)) {
+                    if (canSwap(firstClicked, secondClicked, 4)) {
                         val temp = buttons[firstClicked].text
                         buttons[firstClicked].text = buttons[secondClicked].text
                         buttons[secondClicked].text = temp
-                        checkOrder(i,firstClicked)
-
+                        checkOrder(i, firstClicked)
+                        for (i in 0..buttons.size - 1) {
+                            if (buttons[i].isClickable && buttons_locked == i && buttons[i].text.equals(
+                                    (i + 1).toString()
+                                )
+                            ) {
+                                buttons[i].setBackgroundColor(Color.CYAN)
+                                buttons[i].isClickable = false
+                                buttons_locked += 1
+                            }
+                        }
                     }
 
                     firstClicked = -1

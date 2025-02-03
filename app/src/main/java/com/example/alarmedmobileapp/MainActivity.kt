@@ -86,12 +86,12 @@ class MainActivity : AppCompatActivity() {
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> ViewPagerAdapter.MainFragment()
-                    1 -> ViewPagerAdapter.AlarmFragment()
-                    2 -> ViewPagerAdapter.SoundsFragment()
-                    3 -> ViewPagerAdapter.EmergencyFragment()
-//                    1 -> MatchAdapter(3)
-//                    2 -> OrderAdapter(1)
-//                    3 -> Repeat(3)
+//                    1 -> ViewPagerAdapter.AlarmFragment()
+//                    2 -> ViewPagerAdapter.SoundsFragment()
+//                    3 -> ViewPagerAdapter.EmergencyFragment()
+                    1 -> MathGameAdapter(3)
+                    2 -> OrderAdapter(1)
+                    3 -> Repeat(3)
                     else -> ViewPagerAdapter.MainFragment() // Default case
                 }
             }
