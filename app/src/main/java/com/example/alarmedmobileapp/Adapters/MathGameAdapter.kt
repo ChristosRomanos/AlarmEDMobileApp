@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment
 import com.example.alarmedmobileapp.R
 import kotlin.random.Random
 
-class MathGameAdapter : Fragment(){
+class MathGameAdapter(difficulty: Int) : Fragment(){
     private lateinit var questionTextView: TextView
     private lateinit var answerEditText: EditText
     private lateinit var submitButton: Button
     private lateinit var scoreTextView: TextView
-    private lateinit var difficultySpinner: Spinner
+    val difficulty = difficulty
 
     private var currentQuestion = ""
     private var correctAnswer = 0
@@ -34,19 +34,8 @@ class MathGameAdapter : Fragment(){
         answerEditText = view.findViewById(R.id.answerEditText)
         submitButton = view.findViewById(R.id.submitButton)
         scoreTextView = view.findViewById(R.id.scoreTextView)
-        difficultySpinner = view.findViewById(R.id.difficultySpinner)
 
-        val difficultyLevels = listOf("Easy", "Medium", "Hard")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, difficultyLevels)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        difficultySpinner.adapter = adapter
-
-        difficultySpinner.setSelection(0)
-        difficultySpinner.setOnItemSelectedListener(null)
-
-        difficultySpinner.post {
-           generateQuestion()
-        }
+        generateQuestion()
 
         submitButton.setOnClickListener {
             checkAnswer()
@@ -56,11 +45,10 @@ class MathGameAdapter : Fragment(){
     }
 
     private fun generateQuestion() {
-        val difficulty = difficultySpinner.selectedItem?.toString() ?: "Easy"
         val (numRange, operators) = when (difficulty) {
-            "Easy" -> 1..10 to listOf("+")
-            "Medium" -> 1..20 to listOf("+", "-")
-            "Hard" -> 1..50 to listOf("+", "-", "*")
+            1 -> 1..10 to listOf("+")
+            2 -> 1..20 to listOf("+", "-")
+            3 -> 1..50 to listOf("+", "-", "*")
             else -> 1..10 to listOf("+")
         }
 
