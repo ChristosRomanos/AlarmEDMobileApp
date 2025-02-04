@@ -10,13 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.view.isVisible
+import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
+import kotlin.random.Random
 
 
 class MatchAdapter(difficulty:Int): Fragment() {
     val difficulty=difficulty
+    var buttonsFlipped =0
     override fun onCreateView(layoutInflater: LayoutInflater,container:ViewGroup?, savedInstanceState: Bundle?): View?  {
         super.onCreate(savedInstanceState)
+        if (MainActivity.alarmOn) {
+            MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+        }
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
         val images: MutableList<Int> =
             mutableListOf(
@@ -123,6 +129,17 @@ class MatchAdapter(difficulty:Int): Fragment() {
                     if (buttons[i].text == buttons[lastClicked].text) {
                         buttons[i].isClickable = false
                         buttons[lastClicked].isClickable = false
+                        buttonsFlipped+=2
+                        if(buttonsFlipped==buttons.size){
+                            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                                -1
+                            )
+                            var next= Random.nextInt(4)
+                            while (MainActivity.tasksDone.contains(next)){
+                                next= Random.nextInt(4)
+                            }
+                            MainActivity.viewPager2.setCurrentItem(next,false)
+                        }
                         turnOver = false
                         clicked = 0
                     }

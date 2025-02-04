@@ -12,8 +12,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.isVisible
+import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
+import kotlinx.coroutines.delay
 import kotlin.properties.Delegates
+import kotlin.random.Random
 
 class OrderAdapter(difficulty:Int): Fragment() {
 
@@ -25,6 +28,9 @@ class OrderAdapter(difficulty:Int): Fragment() {
 
     override fun onCreateView(layoutInflater: LayoutInflater,container:ViewGroup?, savedInstanceState: Bundle?): View?  {
         super.onCreate(savedInstanceState)
+        if (MainActivity.alarmOn) {
+            MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+        }
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
 
 
@@ -37,7 +43,6 @@ class OrderAdapter(difficulty:Int): Fragment() {
         val button6: Button = view.findViewById(R.id.button6)
         val button7: Button = view.findViewById(R.id.button7)
         val button8: Button = view.findViewById(R.id.button8)
-        // val button9: Button = view.findViewById(R.id.button9)
 
         buttons = mutableListOf(button1, button2, button3, button4, button5, button6, button7, button8)
 
@@ -114,7 +119,7 @@ class OrderAdapter(difficulty:Int): Fragment() {
                         val temp = buttons[firstClicked].text
                         buttons[firstClicked].text = buttons[secondClicked].text
                         buttons[secondClicked].text = temp
-                        checkOrder(i, firstClicked)
+//                        checkOrder(i, firstClicked)
                         for (i in 0..buttons.size - 1) {
                             if (buttons[i].isClickable && buttons_locked == i && buttons[i].text.equals(
                                     (i + 1).toString()
@@ -123,7 +128,18 @@ class OrderAdapter(difficulty:Int): Fragment() {
                                 buttons[i].setBackgroundColor(Color.CYAN)
                                 buttons[i].isClickable = false
                                 buttons_locked += 1
+
                             }
+                        }
+                        if (buttons_locked==buttons.size){
+                            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                                -1
+                            )
+                            var next= Random.nextInt(4)
+                            while (MainActivity.tasksDone.contains(next)){
+                                next=Random.nextInt(4)
+                            }
+                            MainActivity.viewPager2.setCurrentItem(next,false)
                         }
                     }
 
