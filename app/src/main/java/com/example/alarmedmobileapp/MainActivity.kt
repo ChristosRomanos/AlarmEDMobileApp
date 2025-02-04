@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.alarmedmobileapp.Adapters.MatchAdapter
@@ -19,30 +21,48 @@ import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.Data.loadAlarmLists
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.random.Random
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
-         lateinit var viewPager2: ViewPager2
+        lateinit var viewPager2: ViewPager2
+        val tasksRemaing = MutableLiveData(3)
+        var alarmOn = true
+        var tasksDone: MutableList<Int> = mutableListOf()
     }
-    private lateinit var fragmentAdapter: FragmentStateAdapter
-    private lateinit var footerButtons: LinearLayout
-    private lateinit var header: TextView
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+    suspend fun waitForZeroLiveData() {
+        suspendCancellableCoroutine<Unit> { continuation ->
+            tasksRemaing.observe(this@MainActivity) { remaining ->
+                if (remaining == 0) {
+                    tasksRemaing.removeObservers(this@MainActivity) // Clean up observer
+                    continuation.resume(Unit) // Resume coroutine
+                }
+            }
+        }
+    }
+
+    fun normalFlow() {
         setContentView(R.layout.ok)
-        var button =findViewById<ImageButton>(R.id.btnMain)
-        button.isClickable=false
-        var recent :Alarm
+        var button = findViewById<ImageButton>(R.id.btnMain)
+        button.isClickable = false
+        var recent: Alarm
         var sampleAlarmLists = loadAlarmLists(this)
         println(sampleAlarmLists)
-        if (sampleAlarmLists.isNotEmpty()&& sampleAlarmLists.get(0).alarms.isNotEmpty()) {
+        if (sampleAlarmLists.isNotEmpty() && sampleAlarmLists.get(0).alarms.isNotEmpty()) {
             recent = sampleAlarmLists.get(0).alarms.get(0)
             var time = Int.MAX_VALUE
-            var found=false
+            var found = false
             for (alarmList in sampleAlarmLists) {
                 for (alarm in alarmList.alarms) {
                     if (alarm.isEnabled) {
@@ -55,43 +75,45 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            header= findViewById(R.id.textView2)
-            var day : Days
-            if (recent.repeat.isEmpty()){
-                if(LocalTime.now().isBefore(LocalTime.of(recent.hour,recent.min))){
-                    day= Days.fromInt(LocalDate.now().dayOfWeek.ordinal)!!
+            header = findViewById(R.id.textView2)
+            var day: Days
+            if (recent.repeat.isEmpty()) {
+                if (LocalTime.now().isBefore(LocalTime.of(recent.hour, recent.min))) {
+                    day = Days.fromInt(LocalDate.now().dayOfWeek.ordinal)!!
+                } else {
+                    day = Days.fromInt(LocalDate.now().dayOfWeek.ordinal + 1)!!
                 }
-                else{
-                    day=Days.fromInt(LocalDate.now().dayOfWeek.ordinal+1)!!
-                }
-            }else{
-                day=recent.repeat[0]
+            } else {
+                day = recent.repeat[0]
             }
-            if (recent.hour<12&&found) {
-                header.text = String.format("%02d:%02d AM\n%s",recent.hour,recent.min,day)
-            }
-            else{
-                header.text = String.format("%02d:%02d PM\n%s",recent.hour-12,recent.min,day)
+            if (recent.hour < 12 && found) {
+                header.text = String.format("%02d:%02d AM\n%s", recent.hour, recent.min, day)
+            } else {
+                header.text =
+                    String.format("%02d:%02d PM\n%s", recent.hour - 12, recent.min, day)
             }
         }
 
-        val cyan_color= button.background
+        val cyan_color = button.background
 
         // Initialize ViewPager2 and FragmentStateAdapter
         viewPager2 = findViewById(R.id.viewPager)
         footerButtons = findViewById(R.id.footer)
 
         fragmentAdapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount(): Int = 4  // We have 4 fragments
+            override fun getItemCount(): Int = 8  // We have 4 fragments
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> ViewPagerAdapter.MainFragment()
-//                    1 -> ViewPagerAdapter.AlarmFragment()
-//                    2 -> ViewPagerAdapter.SoundsFragment()
-//                    3 -> ViewPagerAdapter.EmergencyFragment()
-                    1 -> MathGameAdapter(3)
-                    2 -> OrderAdapter(1)
-                    3 -> Repeat(3)
+                    1 -> ViewPagerAdapter.AlarmFragment()
+                    2 -> ViewPagerAdapter.SoundsFragment()
+                    3 -> ViewPagerAdapter.EmergencyFragment()
+                    4 -> MathGameAdapter(3)
+                    5 -> OrderAdapter(1)
+                    6 -> Repeat(3)
+                    7 -> MatchAdapter(3)
+
+
                     else -> ViewPagerAdapter.MainFragment() // Default case
                 }
             }
@@ -99,41 +121,82 @@ class MainActivity : AppCompatActivity() {
         viewPager2.adapter = fragmentAdapter
         // Set up footer button click listeners
         findViewById<ImageButton>(R.id.btnMain).setOnClickListener {
-            var grey_color=it.background
-            button.background=grey_color
-            button.isClickable=true
+            var grey_color = it.background
+            button.background = grey_color
+            button.isClickable = true
             button = it as ImageButton
-            button.background=cyan_color
-            button.isClickable=false
+            button.background = cyan_color
+            button.isClickable = false
             viewPager2.currentItem = 0  // Go to MainFragment
         }
         findViewById<ImageButton>(R.id.btnAlarm).setOnClickListener {
-            var grey_color=it.background
-            button.background=grey_color
-            button.isClickable=true
+            var grey_color = it.background
+            button.background = grey_color
+            button.isClickable = true
             button = it as ImageButton
-            button.background=cyan_color
-            button.isClickable=false
+            button.background = cyan_color
+            button.isClickable = false
             viewPager2.currentItem = 1  // Go to AlarmFragment
         }
         findViewById<ImageButton>(R.id.btnSounds).setOnClickListener {
-            var grey_color=it.background
-            button.background=grey_color
-            button.isClickable=true
+            var grey_color = it.background
+            button.background = grey_color
+            button.isClickable = true
             button = it as ImageButton
-            button.background=cyan_color
-            button.isClickable=false
+            button.background = cyan_color
+            button.isClickable = false
             viewPager2.currentItem = 2  // Go to SoundsFragment
         }
         findViewById<ImageButton>(R.id.btnEmergency).setOnClickListener {
-            var grey_color=it.background
-            button.background=grey_color
-            button.isClickable=true
+            var grey_color = it.background
+            button.background = grey_color
+            button.isClickable = true
             button = it as ImageButton
-            button.background=cyan_color
-            button.isClickable=false
+            button.background = cyan_color
+            button.isClickable = false
             viewPager2.currentItem = 3  // Go to EmergencyFragment
         }
     }
 
+
+    private lateinit var fragmentAdapter: FragmentStateAdapter
+    private lateinit var footerButtons: LinearLayout
+    private lateinit var header: TextView
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // Usage
+        super.onCreate(savedInstanceState)
+        if (alarmOn) {
+            setContentView(R.layout.games) // Set the game layout first
+            viewPager2 = findViewById(R.id.viewPager)
+
+            fragmentAdapter = object : FragmentStateAdapter(this) {
+                override fun getItemCount(): Int = 4  // 4 game fragments
+                override fun createFragment(position: Int): Fragment {
+                    return when (position) {
+                        0 -> OrderAdapter(1)
+                        1 -> Repeat(1)
+                        2 -> MatchAdapter(1)
+                        3 -> MathGameAdapter(1)
+                        else -> {
+                            OrderAdapter(1)
+                        }
+                    }
+                }
+            }
+            viewPager2.adapter = fragmentAdapter
+            viewPager2.isUserInputEnabled=false
+            viewPager2.setCurrentItem(Random.nextInt(4),false)
+
+            // ✅ Wait until tasksRemaining == 0 before switching layouts
+            MainScope().launch {
+                waitForZeroLiveData()
+                alarmOn = false
+                normalFlow()
+            }
+        } else {
+            normalFlow()
+        }
+    }
 }

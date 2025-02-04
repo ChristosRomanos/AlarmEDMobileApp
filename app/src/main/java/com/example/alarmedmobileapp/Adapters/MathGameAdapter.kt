@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 import kotlin.random.Random
 
@@ -29,7 +30,9 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.math_quiz, container, false)
-
+        if (MainActivity.alarmOn) {
+            MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+        }
         questionTextView = view.findViewById(R.id.questionTextView)
         answerEditText = view.findViewById(R.id.answerEditText)
         submitButton = view.findViewById(R.id.submitButton)
@@ -82,6 +85,16 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
             score++
             scoreTextView.text = "Score: $score"
             generateQuestion()
+        }
+        if (score==3){
+            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                -1
+            )
+            var next= Random.nextInt(4)
+            while (MainActivity.tasksDone.contains(next)){
+                next=Random.nextInt(4)
+            }
+            MainActivity.viewPager2.setCurrentItem(next,false)
         }
         answerEditText.text.clear()
     }

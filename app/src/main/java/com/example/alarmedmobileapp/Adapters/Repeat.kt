@@ -11,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.view.isVisible
+import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 import kotlinx.coroutines.*
+import kotlin.random.Random
 
 
 class Repeat(difficulty:Int): Fragment() {
@@ -32,7 +34,9 @@ class Repeat(difficulty:Int): Fragment() {
         val button6: Button = view.findViewById(R.id.button6)
         val button7: Button = view.findViewById(R.id.button7)
         val button8: Button = view.findViewById(R.id.button8)
-
+        if (MainActivity.alarmOn) {
+            MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+        }
 
         val buttons =
             mutableListOf(button1, button2, button3, button4, button5, button6, button7, button8)
@@ -103,11 +107,14 @@ class Repeat(difficulty:Int): Fragment() {
                     if (list_numbers[buttons_pressed] == i) {
                         buttons_pressed += 1
                         if (buttons_pressed == buttons_to_press) {
-                            for (button in buttons) {
-                                startBtn.text="FINISHED"
-                                button.isClickable = false
-                                button.isEnabled = false
+                            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                                -1
+                            )
+                            var next= Random.nextInt(4)
+                            while (MainActivity.tasksDone.contains(next)){
+                                next= Random.nextInt(4)
                             }
+                            MainActivity.viewPager2.setCurrentItem(next,false)
                         }
                         buttons[i].setBackgroundColor(Color.CYAN)
                         buttons[i].isClickable=false
