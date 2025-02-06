@@ -10,17 +10,20 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.alarmedmobileapp.MainActivity
+import com.example.alarmedmobileapp.MainActivity.Companion.viewPager2
 import com.example.alarmedmobileapp.R
 import kotlin.random.Random
 
-class MathGameAdapter(difficulty: Int) : Fragment(){
+class MathGameAdapter() : Fragment(){
     private lateinit var questionTextView: TextView
     private lateinit var answerEditText: EditText
     private lateinit var submitButton: Button
     private lateinit var scoreTextView: TextView
-    val difficulty = difficulty
+    private lateinit var finishBtn: Button
+    val difficulty = 0
 
     private var currentQuestion = ""
     private var correctAnswer = 0
@@ -30,14 +33,20 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.math_quiz, container, false)
+        viewPager2.isUserInputEnabled=false
         if (MainActivity.alarmOn) {
-            MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+            MainActivity.tasksDone.add(viewPager2.currentItem)
+            MainActivity.difficulties[0]=MainActivity.enabledTasks[0]
+        }else{
+            MainActivity.difficulties[0]=MainActivity.difficulties[0]
         }
+        finishBtn=view.findViewById(R.id.finishButton)
         questionTextView = view.findViewById(R.id.questionTextView)
         answerEditText = view.findViewById(R.id.answerEditText)
         submitButton = view.findViewById(R.id.submitButton)
         scoreTextView = view.findViewById(R.id.scoreTextView)
-
+        finishBtn.visibility=View.INVISIBLE
+        finishBtn.isClickable=false
         generateQuestion()
 
         submitButton.setOnClickListener {
@@ -48,6 +57,14 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
     }
 
     private fun generateQuestion() {
+        if(score==3){
+            currentQuestion="Finished"
+            questionTextView.text=currentQuestion
+            answerEditText.isEnabled=false
+            answerEditText.visibility=View.INVISIBLE
+            submitButton.isClickable=false
+            return
+        }
         val (numRange, operators) = when (difficulty) {
             1 -> 10..50 to listOf("+")
             2 -> 1..15 to listOf("-", "*")
@@ -80,6 +97,7 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
     }
     @SuppressLint("SetTextI18n")
     private fun checkAnswer() {
+
         val userAnswer = answerEditText.text.toString().toIntOrNull()
         if (userAnswer == correctAnswer) {
             score++
@@ -87,14 +105,23 @@ class MathGameAdapter(difficulty: Int) : Fragment(){
             generateQuestion()
         }
         if (score==3){
-            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
-                -1
-            )
-            var next= Random.nextInt(4)
-            while (MainActivity.tasksDone.contains(next)){
-                next=Random.nextInt(4)
+            if (MainActivity.alarmOn) {
+                MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                    -1
+                )
+                var next = Random.nextInt(4)
+                while (MainActivity.tasksDone.contains(next)) {
+                    next = Random.nextInt(4)
+                }
+                MainActivity.viewPager2.setCurrentItem(next, false)
+            }else{
+                viewPager2.isUserInputEnabled=true
+                finishBtn.visibility=View.VISIBLE
+                finishBtn.isClickable=true
+                finishBtn.setOnClickListener {
+                    viewPager2.currentItem=3
+                }
             }
-            MainActivity.viewPager2.setCurrentItem(next,false)
         }
         answerEditText.text.clear()
     }

@@ -18,10 +18,10 @@ import kotlinx.coroutines.delay
 import kotlin.properties.Delegates
 import kotlin.random.Random
 
-class OrderAdapter(difficulty:Int): Fragment() {
+class OrderAdapter(): Fragment() {
 
-    val difficulty=difficulty
-    private val numbers = (1..(8+4*(difficulty-1))).shuffled().toMutableList()
+    var difficulty:Int = 0
+    private var numbers:MutableList<Int> = mutableListOf()
     private lateinit var buttons: MutableList<Button>
     private var firstClicked=-1
     var buttons_locked=0
@@ -30,10 +30,16 @@ class OrderAdapter(difficulty:Int): Fragment() {
         super.onCreate(savedInstanceState)
         if (MainActivity.alarmOn) {
             MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+            difficulty=MainActivity.enabledTasks[2]
+        }else{
+            difficulty=MainActivity.difficulties[2]
         }
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
+        numbers=(1..(8+4*(difficulty-1))).shuffled().toMutableList()
 
-
+        val finishBtn: Button =view.findViewById(R.id.finishBtn)
+        finishBtn.visibility=View.INVISIBLE
+        finishBtn.isClickable=false
 
         val button1: Button = view.findViewById(R.id.button1)
         val button2: Button = view.findViewById(R.id.button2)
@@ -98,8 +104,8 @@ class OrderAdapter(difficulty:Int): Fragment() {
 
             buttons.addAll(listOf(button13,button14,button15,button16))
         }
-
-
+        print(difficulty)
+        println(buttons.size)
         for (i in 0..buttons.size-1){
             buttons[i].text = numbers[i].toString()
             buttons[i].setTextColor(Color.WHITE)
@@ -132,14 +138,23 @@ class OrderAdapter(difficulty:Int): Fragment() {
                             }
                         }
                         if (buttons_locked==buttons.size){
-                            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
-                                -1
-                            )
-                            var next= Random.nextInt(4)
-                            while (MainActivity.tasksDone.contains(next)){
-                                next=Random.nextInt(4)
+                            if(MainActivity.alarmOn){
+                                MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                                    -1
+                                )
+                                var next= Random.nextInt(4)
+                                while (MainActivity.tasksDone.contains(next)){
+                                    next= Random.nextInt(4)
+                                }
+                                MainActivity.viewPager2.setCurrentItem(next,false)
+                            }else{
+                                finishBtn.text="FINISHED"
+                                finishBtn.visibility=View.VISIBLE
+                                finishBtn.isClickable=true
+                                finishBtn.setOnClickListener({
+                                    MainActivity.viewPager2.currentItem=3
+                                })
                             }
-                            MainActivity.viewPager2.setCurrentItem(next,false)
                         }
                     }
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:elevation="8dp"
+    android:background="#EA1A1919">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <Spinner
+            android:id="@+id/difficultySpinner1"
+            style="@style/Theme.Material3.Dark"
+            android:layout_width="176dp"
+            android:layout_height="32dp"
+            android:entries="@array/difficulty_levels"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/tryButton"
+            android:layout_width="87dp"
+            android:layout_height="34dp"
+            android:includeFontPadding="false"
+            android:text="Try"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/difficultySpinner1"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="263dp"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <Spinner
+            android:id="@+id/difficultySpinner2"
+            android:layout_width="176dp"
+            android:layout_height="32dp"
+            android:entries="@array/difficulty_levels"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/enabledButton"
+            android:layout_width="87dp"
+            android:layout_height="34dp"
+            android:includeFontPadding="false"
+            android:text="Enable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/difficultySpinner2"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/disableBtn"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="Disable"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go Back"
+        android:layout_marginTop="16dp"/>
+
+
+</LinearLayout>
