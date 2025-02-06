@@ -9,19 +9,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.view.isVisible
 import com.example.alarmedmobileapp.MainActivity
 import com.example.alarmedmobileapp.R
 import kotlin.random.Random
 
 
-class MatchAdapter(difficulty:Int): Fragment() {
-    val difficulty=difficulty
+class MatchAdapter(): Fragment() {
+    var difficulty=0
     var buttonsFlipped =0
     override fun onCreateView(layoutInflater: LayoutInflater,container:ViewGroup?, savedInstanceState: Bundle?): View?  {
         super.onCreate(savedInstanceState)
         if (MainActivity.alarmOn) {
             MainActivity.tasksDone.add(MainActivity.viewPager2.currentItem)
+            difficulty=MainActivity.enabledTasks[1]
+        }else{
+            difficulty=MainActivity.difficulties[1]
         }
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
         val images: MutableList<Int> =
@@ -30,8 +34,11 @@ class MatchAdapter(difficulty:Int): Fragment() {
                 R.drawable.down, R.drawable.anchor, R.drawable.danger, R.drawable.up,
                 R.drawable.down
             )
-//                )
-
+        val title=view.findViewById<TextView>(R.id.titleView)
+        title.text="MEMORY"
+        val finishBtn: Button =view.findViewById(R.id.finishBtn)
+        finishBtn.visibility=View.INVISIBLE
+        finishBtn.isClickable=false
         val button1: Button = view.findViewById(R.id.button1)
         val button2: Button = view.findViewById(R.id.button2)
         val button3: Button = view.findViewById(R.id.button3)
@@ -131,14 +138,23 @@ class MatchAdapter(difficulty:Int): Fragment() {
                         buttons[lastClicked].isClickable = false
                         buttonsFlipped+=2
                         if(buttonsFlipped==buttons.size){
-                            MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
-                                -1
-                            )
-                            var next= Random.nextInt(4)
-                            while (MainActivity.tasksDone.contains(next)){
-                                next= Random.nextInt(4)
+                            if(MainActivity.alarmOn){
+                                MainActivity.tasksRemaing.value = MainActivity.tasksRemaing.value?.plus(
+                                    -1
+                                )
+                                var next= Random.nextInt(4)
+                                while (MainActivity.tasksDone.contains(next)){
+                                    next= Random.nextInt(4)
+                                }
+                                MainActivity.viewPager2.setCurrentItem(next,false)
+                            }else{
+                                finishBtn.text="FINISHED"
+                                finishBtn.visibility=View.VISIBLE
+                                finishBtn.isClickable=true
+                                finishBtn.setOnClickListener({
+                                    MainActivity.viewPager2.currentItem=3
+                                })
                             }
-                            MainActivity.viewPager2.setCurrentItem(next,false)
                         }
                         turnOver = false
                         clicked = 0

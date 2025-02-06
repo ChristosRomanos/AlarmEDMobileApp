@@ -9,6 +9,7 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -18,7 +19,7 @@
 
     <GridLayout
         android:layout_width="385dp"
-        android:layout_height="558dp"
+        android:layout_height="499dp"
         android:alignmentMode="alignMargins"
         android:clickable="false"
         android:columnCount="4"
@@ -185,6 +186,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_calculate_24"
             android:visibility="invisible" />
+
         <Button
             android:id="@+id/button15"
             android:layout_width="0dp"
@@ -197,6 +199,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/baseline_calculate_24"
             android:visibility="invisible" />
+
         <Button
             android:id="@+id/button16"
             android:layout_width="0dp"

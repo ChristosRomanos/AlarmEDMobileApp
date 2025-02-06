@@ -1,5 +1,6 @@
 package com.example.alarmedmobileapp
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -19,8 +20,11 @@ import com.example.alarmedmobileapp.Adapters.OrderAdapter
 import com.example.alarmedmobileapp.Adapters.Repeat
 import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
+import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.Data.loadAlarmLists
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
@@ -30,14 +34,27 @@ import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.random.Random
 import kotlinx.coroutines.suspendCancellableCoroutine
+import java.io.File
 import kotlin.coroutines.resume
 
 class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var viewPager2: ViewPager2
-        val tasksRemaing = MutableLiveData(3)
-        var alarmOn = true
+        val tasksRemaing = MutableLiveData(0)
+        var alarmOn = false
         var tasksDone: MutableList<Int> = mutableListOf()
+        var difficulties: MutableList<Int> = mutableListOf(1, 1, 1, 1)
+        lateinit var enabledTasks: MutableList<Int>
+        fun overwriteTasksJsonFile(context: Context,tasks: MutableList<Int>) {
+            val gson = Gson()
+            // Convert the list to a JSON string
+            val json = gson.toJson(tasks)
+
+            // Write the JSON string to the file
+            val file = File(context.filesDir,"tasks.json")
+            file.writeText(json)
+            println("Wrote data: "+json)
+        }
     }
 
 
@@ -108,10 +125,10 @@ class MainActivity : AppCompatActivity() {
                     1 -> ViewPagerAdapter.AlarmFragment()
                     2 -> ViewPagerAdapter.SoundsFragment()
                     3 -> ViewPagerAdapter.EmergencyFragment()
-                    4 -> MathGameAdapter(3)
-                    5 -> OrderAdapter(1)
-                    6 -> Repeat(3)
-                    7 -> MatchAdapter(3)
+                    4 -> MathGameAdapter()
+                    5 -> MatchAdapter( )
+                    6 -> OrderAdapter()
+                    7 -> Repeat()
 
 
                     else -> ViewPagerAdapter.MainFragment() // Default case
@@ -119,6 +136,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewPager2.adapter = fragmentAdapter
+        viewPager2.currentItem=3
+        viewPager2.currentItem=0
         // Set up footer button click listeners
         findViewById<ImageButton>(R.id.btnMain).setOnClickListener {
             var grey_color = it.background
@@ -166,6 +185,12 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         // Usage
+        enabledTasks = loadTasks(this)
+        for(i in enabledTasks){
+            if (i>0){
+                tasksRemaing.value = tasksRemaing.value?.plus(1)
+            }
+        }
         super.onCreate(savedInstanceState)
         if (alarmOn) {
             setContentView(R.layout.games) // Set the game layout first
@@ -175,12 +200,12 @@ class MainActivity : AppCompatActivity() {
                 override fun getItemCount(): Int = 4  // 4 game fragments
                 override fun createFragment(position: Int): Fragment {
                     return when (position) {
-                        0 -> OrderAdapter(1)
-                        1 -> Repeat(1)
-                        2 -> MatchAdapter(1)
-                        3 -> MathGameAdapter(1)
+                        0 -> OrderAdapter()
+                        1 -> Repeat()
+                        2 -> MatchAdapter()
+                        3 -> MathGameAdapter()
                         else -> {
-                            OrderAdapter(1)
+                            OrderAdapter()
                         }
                     }
                 }
@@ -198,5 +223,22 @@ class MainActivity : AppCompatActivity() {
         } else {
             normalFlow()
         }
+    }
+    fun loadTasks(context: Context): MutableList<Int> {
+        val sourceFile = File(context.filesDir, "tasks.json")
+        if(sourceFile.exists()){
+            println("File exists")
+        }else {
+            val assetManager = context.assets
+            val inputStream = assetManager.open("tasks.json")
+            val json = inputStream.bufferedReader().use { it.readText() }
+            sourceFile.writeText(json)
+        }
+        val jsonContent = sourceFile.readText()
+        // Use Gson to parse the JSON into a list of SoundFile
+        val gson = Gson()
+        val type = object : TypeToken<MutableList<Int>>() {}.type
+        return gson.fromJson(jsonContent, type) // Returns List<SoundFile>
+
     }
 }
