@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:text="6:00 AM"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
 

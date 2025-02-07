@@ -127,6 +127,13 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                         6->orderLayout.setBackgroundColor(Color.CYAN)
                         7->repeatLayout.setBackgroundColor(Color.CYAN)
                     }
+                }else {
+                    when (i) {
+                        4 -> mathsLayout.setBackgroundColor(Color.GRAY)
+                        5 -> matchLayout.setBackgroundColor(Color.GRAY)
+                        6 -> orderLayout.setBackgroundColor(Color.GRAY)
+                        7 -> repeatLayout.setBackgroundColor(Color.GRAY)
+                    }
                 }
             }
             mathsButton.setOnClickListener{
@@ -205,6 +212,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                     Toast.makeText(context, "Please select a difficulty level", Toast.LENGTH_SHORT)
                         .show()
                 } else {
+                    print(task)
                     val selectedDifficulty = difficultySpinner2.selectedItem.toString()
                     Toast.makeText(context, "Enabled: $selectedDifficulty", Toast.LENGTH_SHORT)
                         .show()
@@ -220,12 +228,14 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                 }
             }
             disableBtn.setOnClickListener{
+                print(task)
                 enabledTasks[task-4]=0
                 when(task){
-                    4->mathsLayout.background=color
-                    5->matchLayout.background=color
-                    6->orderLayout.background=color
-                    7->repeatLayout.background=color
+
+                    4->mathsLayout.setBackgroundColor(Color.GRAY)
+                    5->matchLayout.setBackgroundColor(Color.GRAY)
+                    6->orderLayout.setBackgroundColor(Color.GRAY)
+                    7->repeatLayout.setBackgroundColor(Color.GRAY)
                 }
                 MainActivity.overwriteTasksJsonFile(this.requireContext(),enabledTasks)
                 dialog.dismiss()
