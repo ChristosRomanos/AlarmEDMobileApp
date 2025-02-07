@@ -70,8 +70,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun normalFlow() {
-        setContentView(R.layout.ok)
-        var button = findViewById<ImageButton>(R.id.btnMain)
+        setContentView(R.layout.ok_alternative)
+        var layout = findViewById<LinearLayout>(R.id.home_container)
+        var button=findViewById<ImageButton>(R.id.btnMain)
+        layout.setBackgroundColor(Color.CYAN)
         button.isClickable = false
         var recent: Alarm
         var sampleAlarmLists = loadAlarmLists(this)
@@ -140,38 +142,38 @@ class MainActivity : AppCompatActivity() {
         viewPager2.currentItem=0
         // Set up footer button click listeners
         findViewById<ImageButton>(R.id.btnMain).setOnClickListener {
-            var grey_color = it.background
-            button.background = grey_color
+            layout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
             button = it as ImageButton
-            button.background = cyan_color
+            layout=findViewById(R.id.home_container)
+            layout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 0  // Go to MainFragment
         }
         findViewById<ImageButton>(R.id.btnAlarm).setOnClickListener {
-            var grey_color = it.background
-            button.background = grey_color
+            layout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
             button = it as ImageButton
-            button.background = cyan_color
+            layout=findViewById(R.id.alarm_container)
+            layout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 1  // Go to AlarmFragment
         }
         findViewById<ImageButton>(R.id.btnSounds).setOnClickListener {
-            var grey_color = it.background
-            button.background = grey_color
+            layout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
             button = it as ImageButton
-            button.background = cyan_color
+            layout=findViewById(R.id.sounds_container)
+            layout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 2  // Go to SoundsFragment
         }
         findViewById<ImageButton>(R.id.btnEmergency).setOnClickListener {
-            var grey_color = it.background
-            button.background = grey_color
+            layout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
             button = it as ImageButton
-            button.background = cyan_color
+            layout=findViewById(R.id.games_container)
+            layout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 3  // Go to EmergencyFragment
         }
