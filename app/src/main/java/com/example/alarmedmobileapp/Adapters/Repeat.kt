@@ -20,7 +20,7 @@ import kotlin.random.Random
 
 class Repeat(): Fragment() {
     var difficulty=0
-    var buttons_to_press=4+2*(difficulty-1)
+    var buttons_to_press=0
     var started=false
     lateinit var list_numbers:MutableList<Int>
     lateinit var color:Drawable
@@ -41,6 +41,7 @@ class Repeat(): Fragment() {
         }else{
             difficulty=MainActivity.difficulties[3]
         }
+        buttons_to_press=4+2*(difficulty-1)
         val title=view.findViewById<TextView>(R.id.titleView)
         title.text="Repeat"
 

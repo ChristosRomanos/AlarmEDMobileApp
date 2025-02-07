@@ -1,193 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EA1A1919"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Tasks"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <GridLayout
-        android:layout_width="385dp"
-        android:layout_height="558dp"
-        android:alignmentMode="alignMargins"
-        android:columnCount="2"
-        android:padding="8dp"
-        android:rowCount="2"
-        android:rowOrderPreserved="false"
-        android:textColor="@android:color/white">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mathsBtnLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mathsBtnLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="#474646"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/memoryLayout"
+        app:layout_constraintEnd_toStartOf="@+id/memoryLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/memoryLayout">
+
+        <ImageButton
+            android:id="@+id/mathsBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#474646"
-            android:elevation="4dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_calculate_24"
+            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/mathsBtn"
-                android:layout_width="154dp"
-                android:layout_height="165dp"
-                android:layout_marginTop="22dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_calculate_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="MATHS"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/mathsBtn"
-                app:layout_constraintStart_toStartOf="@+id/mathsBtn"
-                app:layout_constraintTop_toBottomOf="@+id/mathsBtn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="MATHS"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/mathsBtn"
+            app:layout_constraintStart_toStartOf="@+id/mathsBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/memoryLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/memoryLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="#474646"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/repeatLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mathsBtnLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <ImageButton
+            android:id="@+id/memoryBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#474646"
-            android:elevation="4dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_memory_24"
+            app:layout_constraintBottom_toTopOf="@+id/memoryView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/memoryBtn"
-                android:layout_width="154dp"
-                android:layout_height="165dp"
-                android:layout_marginTop="22dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_memory_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/memoryView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="MEMORY"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/memoryBtn"
+            app:layout_constraintStart_toStartOf="@+id/memoryBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/memoryView3"
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="MEMORY"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/memoryBtn"
-                app:layout_constraintStart_toStartOf="@+id/memoryBtn"
-                app:layout_constraintTop_toBottomOf="@+id/memoryBtn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/orderLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#474646"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toStartOf="@+id/repeatLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mathsBtnLayout">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/orderLayout"
+        <ImageButton
+            android:id="@+id/orderBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#474646"
-            android:elevation="4dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_reorder_24"
+            app:layout_constraintBottom_toTopOf="@+id/orderView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/orderBtn"
-                android:layout_width="154dp"
-                android:layout_height="165dp"
-                android:layout_marginTop="22dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_reorder_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/orderView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="ORDER"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/orderBtn"
+            app:layout_constraintStart_toStartOf="@+id/orderBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/orderView3"
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="ORDER"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/orderBtn"
-                app:layout_constraintStart_toStartOf="@+id/orderBtn"
-                app:layout_constraintTop_toBottomOf="@+id/orderBtn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/repeatLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"
+        android:background="#474646"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/orderLayout"
+        app:layout_constraintTop_toBottomOf="@+id/memoryLayout">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/repeatLayout"
+        <ImageButton
+            android:id="@+id/repeatBtn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="#474646"
-            android:elevation="4dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/baseline_repeat_24"
+            app:layout_constraintBottom_toTopOf="@+id/repeatView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/repeatBtn"
-                android:layout_width="154dp"
-                android:layout_height="165dp"
-                android:layout_marginTop="22dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_repeat_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/repeatView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="REPEAT"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/repeatBtn"
+            app:layout_constraintStart_toStartOf="@+id/repeatBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/repeatView"
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="REPEAT"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/repeatBtn"
-                app:layout_constraintStart_toStartOf="@+id/repeatBtn"
-                app:layout_constraintTop_toBottomOf="@+id/repeatBtn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </GridLayout>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/textView5"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="Way chosen: Randomly"
         android:textColor="@android:color/white"
-        android:textSize="16sp"></TextView>
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/remainingText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <TextView
         android:id="@+id/remainingText"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         android:text="Amount of tasks needed to be completed: 3"
         android:textColor="@android:color/white"
-        android:textSize="16sp"></TextView>
-</LinearLayout>
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
+</androidx.constraintlayout.widget.ConstraintLayout>

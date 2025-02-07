@@ -36,7 +36,7 @@ class MatchAdapter(): Fragment() {
             )
         val title=view.findViewById<TextView>(R.id.titleView)
         title.text="MEMORY"
-        val finishBtn: Button =view.findViewById(R.id.finishBtn)
+        val finishBtn: Button =view.findViewById(R.id.startBtn)
         finishBtn.visibility=View.INVISIBLE
         finishBtn.isClickable=false
         val button1: Button = view.findViewById(R.id.button1)
@@ -115,6 +115,7 @@ class MatchAdapter(): Fragment() {
         images.shuffle()
         for(i in 0..buttons.size-1){
             buttons[i].setBackgroundResource(cardBack)
+            buttons[i].textSize=0.0F
             buttons[i].text="cardBack"
             buttons[i].setOnClickListener {
                 if (buttons[i].text == "cardBack" && !turnOver) {

@@ -23,7 +23,7 @@ class MathGameAdapter() : Fragment(){
     private lateinit var submitButton: Button
     private lateinit var scoreTextView: TextView
     private lateinit var finishBtn: Button
-    val difficulty = 0
+    var difficulty = 0
 
     private var currentQuestion = ""
     private var correctAnswer = 0
@@ -38,7 +38,7 @@ class MathGameAdapter() : Fragment(){
             MainActivity.tasksDone.add(viewPager2.currentItem)
             MainActivity.difficulties[0]=MainActivity.enabledTasks[0]
         }else{
-            MainActivity.difficulties[0]=MainActivity.difficulties[0]
+            difficulty=MainActivity.difficulties[0]
         }
         finishBtn=view.findViewById(R.id.finishButton)
         questionTextView = view.findViewById(R.id.questionTextView)

@@ -37,7 +37,7 @@ class OrderAdapter(): Fragment() {
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
         numbers=(1..(8+4*(difficulty-1))).shuffled().toMutableList()
 
-        val finishBtn: Button =view.findViewById(R.id.finishBtn)
+        val finishBtn: Button =view.findViewById(R.id.startBtn)
         finishBtn.visibility=View.INVISIBLE
         finishBtn.isClickable=false
 
