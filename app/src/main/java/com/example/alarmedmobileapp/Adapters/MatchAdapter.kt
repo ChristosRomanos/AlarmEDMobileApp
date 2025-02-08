@@ -153,7 +153,11 @@ class MatchAdapter(): Fragment() {
                                 finishBtn.visibility=View.VISIBLE
                                 finishBtn.isClickable=true
                                 finishBtn.setOnClickListener({
-                                    MainActivity.viewPager2.currentItem=3
+                                    MainActivity.viewPager2.adapter=MainActivity.fragmentAdapter
+                                    MainActivity.viewPager2.setCurrentItem(3,false)
+                                    MainActivity.viewPager2.isUserInputEnabled=true
+
+
                                 })
                             }
                         }

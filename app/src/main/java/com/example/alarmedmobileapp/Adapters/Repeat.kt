@@ -127,7 +127,9 @@ class Repeat(): Fragment() {
                                 startBtn.text="FINISHED"
                                 startBtn.isClickable=true
                                 startBtn.setOnClickListener({
-                                    MainActivity.viewPager2.currentItem=3
+                                    MainActivity.viewPager2.adapter=MainActivity.fragmentAdapter
+                                    MainActivity.viewPager2.isUserInputEnabled=true
+                                    MainActivity.viewPager2.setCurrentItem(3,false)
                                 })
                             }
                         }
