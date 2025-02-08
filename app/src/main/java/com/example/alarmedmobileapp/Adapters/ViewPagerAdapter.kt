@@ -65,7 +65,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            viewPager2.isUserInputEnabled = true
             return inflater.inflate(R.layout.main, container, false)
         }
     }
@@ -76,7 +75,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            viewPager2.isUserInputEnabled = true
             val view = inflater.inflate(R.layout.sounds, container, false)
             super.onCreate(savedInstanceState)
             val applyBtn: Button = view.findViewById(R.id.applyBtn)
@@ -112,41 +110,41 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             val matchButton:ImageButton  =view.findViewById(R.id.memoryBtn)
             val repeatButton:ImageButton =view.findViewById(R.id.repeatBtn)
             val remainingView:TextView=view.findViewById(R.id.remainingText)
-            remainingView.text="Amount of tasks needed to be completed: "+(4-enabledTasks.count { it!=0 }).toString()
+            remainingView.text="Amount of tasks needed to be completed: "+(enabledTasks.count { it!=0 }).toString()
             mathsLayout=view.findViewById(R.id.mathsBtnLayout)
             orderLayout=view.findViewById(R.id.orderLayout)
             matchLayout=view.findViewById(R.id.memoryLayout)
             repeatLayout=view.findViewById(R.id.repeatLayout)
             color= repeatLayout.background
 
-            for (i in 4..7){
-                if (enabledTasks[i-4]!=0){
+            for (i in 0..3){
+                if (enabledTasks[i]!=0){
                     when(i){
-                        4->mathsLayout.setBackgroundColor(Color.CYAN)
-                        5->matchLayout.setBackgroundColor(Color.CYAN)
-                        6->orderLayout.setBackgroundColor(Color.CYAN)
-                        7->repeatLayout.setBackgroundColor(Color.CYAN)
+                        0->mathsLayout.setBackgroundColor(Color.CYAN)
+                        1->matchLayout.setBackgroundColor(Color.CYAN)
+                        2->orderLayout.setBackgroundColor(Color.CYAN)
+                        3->repeatLayout.setBackgroundColor(Color.CYAN)
                     }
                 }else {
                     when (i) {
-                        4 -> mathsLayout.setBackgroundColor(Color.GRAY)
-                        5 -> matchLayout.setBackgroundColor(Color.GRAY)
-                        6 -> orderLayout.setBackgroundColor(Color.GRAY)
-                        7 -> repeatLayout.setBackgroundColor(Color.GRAY)
+                        0 -> mathsLayout.setBackgroundColor(Color.GRAY)
+                        1 -> matchLayout.setBackgroundColor(Color.GRAY)
+                        2 -> orderLayout.setBackgroundColor(Color.GRAY)
+                        3 -> repeatLayout.setBackgroundColor(Color.GRAY)
                     }
                 }
             }
             mathsButton.setOnClickListener{
-                showPopup(this.requireContext(),4)
+                showPopup(this.requireContext(),0)
             }
             orderButton.setOnClickListener{
-                showPopup(this.requireContext(),6)
+                showPopup(this.requireContext(),2)
             }
             matchButton.setOnClickListener{
-                showPopup(this.requireContext(),5)
+                showPopup(this.requireContext(),1)
             }
             repeatButton.setOnClickListener{
-                showPopup(this.requireContext(),7)
+                showPopup(this.requireContext(),3)
             }
             return view
         }
@@ -180,7 +178,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             val enabledButton = view.findViewById<Button>(R.id.enabledButton)
             val goBackButton = view.findViewById<Button>(R.id.goBackButton)
             val disableBtn=view.findViewById<Button>(R.id.disableBtn)
-            if (MainActivity.enabledTasks[task-4]==0){
+            if (MainActivity.enabledTasks[task]==0){
                 disableBtn.visibility=View.GONE
             }else{
                 disableBtn.visibility=View.VISIBLE
@@ -194,10 +192,12 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                         .show()
                 } else {
                     val selectedDifficulty = difficultySpinner1.selectedItem.toString()
-                    difficulties[task-4] = difficultySpinner1.selectedItemPosition
+                    difficulties[task] = difficultySpinner1.selectedItemPosition
                      Toast.makeText(context, "Selected: $selectedDifficulty", Toast.LENGTH_SHORT)
                         .show()
                     dialog.dismiss()
+                    viewPager2.adapter=MainActivity.fragmentAdapter2
+                    viewPager2.isUserInputEnabled = false
                     viewPager2.adapter?.notifyItemChanged(task)
                     viewPager2.currentItem = task
 
@@ -216,12 +216,12 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
                     val selectedDifficulty = difficultySpinner2.selectedItem.toString()
                     Toast.makeText(context, "Enabled: $selectedDifficulty", Toast.LENGTH_SHORT)
                         .show()
-                    enabledTasks[task-4]=difficultySpinner2.selectedItemPosition
+                    enabledTasks[task]=difficultySpinner2.selectedItemPosition
                     when(task){
-                        4->mathsLayout.setBackgroundColor(Color.CYAN)
-                        5->matchLayout.setBackgroundColor(Color.CYAN)
-                        6->orderLayout.setBackgroundColor(Color.CYAN)
-                        7->repeatLayout.setBackgroundColor(Color.CYAN)
+                        0->mathsLayout.setBackgroundColor(Color.CYAN)
+                        1->matchLayout.setBackgroundColor(Color.CYAN)
+                        2->orderLayout.setBackgroundColor(Color.CYAN)
+                        3->repeatLayout.setBackgroundColor(Color.CYAN)
                     }
                     MainActivity.overwriteTasksJsonFile(this.requireContext(),enabledTasks)
                     dialog.dismiss()
@@ -229,13 +229,13 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             }
             disableBtn.setOnClickListener{
                 print(task)
-                enabledTasks[task-4]=0
+                enabledTasks[task]=0
                 when(task){
 
-                    4->mathsLayout.setBackgroundColor(Color.GRAY)
-                    5->matchLayout.setBackgroundColor(Color.GRAY)
-                    6->orderLayout.setBackgroundColor(Color.GRAY)
-                    7->repeatLayout.setBackgroundColor(Color.GRAY)
+                    0->mathsLayout.setBackgroundColor(Color.GRAY)
+                    1->matchLayout.setBackgroundColor(Color.GRAY)
+                    2->orderLayout.setBackgroundColor(Color.GRAY)
+                    3->repeatLayout.setBackgroundColor(Color.GRAY)
                 }
                 MainActivity.overwriteTasksJsonFile(this.requireContext(),enabledTasks)
                 dialog.dismiss()
@@ -251,7 +251,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            viewPager2.isUserInputEnabled = true
             var alarms_changed=false
             var sampleAlarmLists= loadAlarmLists(this.requireContext())
             val view = inflater.inflate(R.layout.alarms, container, false)

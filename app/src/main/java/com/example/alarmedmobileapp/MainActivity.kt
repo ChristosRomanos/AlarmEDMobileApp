@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity() {
         var alarmOn = false
         var tasksDone: MutableList<Int> = mutableListOf()
         var difficulties: MutableList<Int> = mutableListOf(1, 1, 1, 1)
+        private var startX = 0f
+        lateinit var fragmentAdapter2: FragmentStateAdapter
+        lateinit var fragmentAdapter: FragmentStateAdapter
         lateinit var enabledTasks: MutableList<Int>
         fun overwriteTasksJsonFile(context: Context,tasks: MutableList<Int>) {
             val gson = Gson()
@@ -76,6 +80,20 @@ class MainActivity : AppCompatActivity() {
         var recent: Alarm
         var sampleAlarmLists = loadAlarmLists(this)
         println(sampleAlarmLists)
+        fragmentAdapter2 = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int = 4  // 4 game fragments
+            override fun createFragment(position: Int): Fragment {
+                return when (position) {
+                    0 -> MathGameAdapter()
+                    1 -> MatchAdapter()
+                    2 -> OrderAdapter()
+                    3 -> Repeat()
+                    else -> {
+                        OrderAdapter()
+                    }
+                }
+            }
+        }
         if (sampleAlarmLists.isNotEmpty() && sampleAlarmLists.get(0).alarms.isNotEmpty()) {
             recent = sampleAlarmLists.get(0).alarms.get(0)
             var time = Int.MAX_VALUE
@@ -118,17 +136,14 @@ class MainActivity : AppCompatActivity() {
         footerButtons = findViewById(R.id.footer)
 
         fragmentAdapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount(): Int = 8  // We have 4 fragments
+            override fun getItemCount(): Int = 4  // We have 4 fragments
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> ViewPagerAdapter.MainFragment()
                     1 -> ViewPagerAdapter.AlarmFragment()
                     2 -> ViewPagerAdapter.SoundsFragment()
                     3 -> ViewPagerAdapter.EmergencyFragment()
-                    4 -> MathGameAdapter()
-                    5 -> MatchAdapter( )
-                    6 -> OrderAdapter()
-                    7 -> Repeat()
+
 
 
                     else -> ViewPagerAdapter.MainFragment() // Default case
@@ -136,10 +151,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewPager2.adapter = fragmentAdapter
-        viewPager2.currentItem=3
-        viewPager2.currentItem=0
+        viewPager2.isUserInputEnabled = true
+        viewPager2.currentItem = 3
+        viewPager2.currentItem = 0
+
+
+        // Manually handle left swipe from page 4
         // Set up footer button click listeners
         findViewById<ImageButton>(R.id.btnMain).setOnClickListener {
+            viewPager2.adapter = fragmentAdapter
+            viewPager2.isUserInputEnabled = true
             var grey_color = it.background
             button.background = grey_color
             button.isClickable = true
@@ -149,6 +170,8 @@ class MainActivity : AppCompatActivity() {
             viewPager2.currentItem = 0  // Go to MainFragment
         }
         findViewById<ImageButton>(R.id.btnAlarm).setOnClickListener {
+            viewPager2.adapter = fragmentAdapter
+            viewPager2.isUserInputEnabled = true
             var grey_color = it.background
             button.background = grey_color
             button.isClickable = true
@@ -158,6 +181,8 @@ class MainActivity : AppCompatActivity() {
             viewPager2.currentItem = 1  // Go to AlarmFragment
         }
         findViewById<ImageButton>(R.id.btnSounds).setOnClickListener {
+            viewPager2.adapter = fragmentAdapter
+            viewPager2.isUserInputEnabled = true
             var grey_color = it.background
             button.background = grey_color
             button.isClickable = true
@@ -168,6 +193,8 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<ImageButton>(R.id.btnEmergency).setOnClickListener {
             var grey_color = it.background
+            viewPager2.adapter = fragmentAdapter
+            viewPager2.isUserInputEnabled = true
             button.background = grey_color
             button.isClickable = true
             button = it as ImageButton
@@ -178,7 +205,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private lateinit var fragmentAdapter: FragmentStateAdapter
     private lateinit var footerButtons: LinearLayout
     private lateinit var header: TextView
 
@@ -195,8 +221,7 @@ class MainActivity : AppCompatActivity() {
         if (alarmOn) {
             setContentView(R.layout.games) // Set the game layout first
             viewPager2 = findViewById(R.id.viewPager)
-
-            fragmentAdapter = object : FragmentStateAdapter(this) {
+            fragmentAdapter2 = object : FragmentStateAdapter(this) {
                 override fun getItemCount(): Int = 4  // 4 game fragments
                 override fun createFragment(position: Int): Fragment {
                     return when (position) {
@@ -210,8 +235,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            viewPager2.adapter = fragmentAdapter
-            viewPager2.isUserInputEnabled=false
+            viewPager2.adapter = fragmentAdapter2
+            viewPager2.isUserInputEnabled = false
             viewPager2.setCurrentItem(Random.nextInt(4),false)
 
             // ✅ Wait until tasksRemaining == 0 before switching layouts
