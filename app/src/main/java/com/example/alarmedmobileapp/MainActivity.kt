@@ -287,6 +287,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onCreate(savedInstanceState)
+        actionBar?.hide()
+        supportActionBar?.hide()
         if (alarmOn) {
             setContentView(R.layout.games) // Set the game layout first
             viewPager2 = findViewById(R.id.viewPager)
