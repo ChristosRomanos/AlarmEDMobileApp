@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="102dp"
         android:background="#7FD4D4"
         android:gravity="center"
         android:padding="10dp"
@@ -156,7 +156,7 @@
         android:layout_width="114dp"
         android:layout_height="27dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Status:"
         android:textSize="20sp"
@@ -168,12 +168,12 @@
         android:id="@+id/textView2"
         android:layout_width="99dp"
         android:layout_height="55dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="No Alarm"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -192,10 +192,8 @@
         android:id="@+id/imageView2"
         android:layout_width="39dp"
         android:layout_height="40dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="105dp"
-
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_alarm_24" />
 

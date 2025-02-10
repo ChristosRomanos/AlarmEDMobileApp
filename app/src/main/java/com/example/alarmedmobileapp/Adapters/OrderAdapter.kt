@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.isVisible
@@ -36,7 +37,8 @@ class OrderAdapter(): Fragment() {
         }
         val view=layoutInflater.inflate(R.layout.tile_layout_easy,container)
         numbers=(1..(8+4*(difficulty-1))).shuffled().toMutableList()
-
+        val title:TextView=view.findViewById(R.id.titleView)
+        title.text = "ORDER"
         val finishBtn: Button =view.findViewById(R.id.startBtn)
         finishBtn.visibility=View.INVISIBLE
         finishBtn.isClickable=false

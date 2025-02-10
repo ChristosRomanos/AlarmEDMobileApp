@@ -2,9 +2,11 @@ package com.example.alarmedmobileapp
 
 import android.content.Context
 import android.graphics.Color
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.alarmedmobileapp.Adapters.MatchAdapter
@@ -21,13 +22,10 @@ import com.example.alarmedmobileapp.Adapters.OrderAdapter
 import com.example.alarmedmobileapp.Adapters.Repeat
 import com.example.alarmedmobileapp.Adapters.ViewPagerAdapter
 import com.example.alarmedmobileapp.Data.Alarm
-import com.example.alarmedmobileapp.Data.AlarmList
 import com.example.alarmedmobileapp.Data.Days
 import com.example.alarmedmobileapp.Data.loadAlarmLists
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 
 import kotlinx.coroutines.launch
@@ -45,10 +43,19 @@ class MainActivity : AppCompatActivity() {
         var alarmOn = false
         var tasksDone: MutableList<Int> = mutableListOf()
         var difficulties: MutableList<Int> = mutableListOf(1, 1, 1, 1)
-        private var startX = 0f
         lateinit var fragmentAdapter2: FragmentStateAdapter
         lateinit var fragmentAdapter: FragmentStateAdapter
         lateinit var enabledTasks: MutableList<Int>
+        lateinit var currentLayout: LinearLayout
+        lateinit var button: ImageButton
+        lateinit var mainLayout: LinearLayout
+        lateinit var alarmLayout: LinearLayout
+        lateinit var soundLayout: LinearLayout
+        lateinit var tasksLayout: LinearLayout
+        lateinit var mainBtn:ImageButton
+        lateinit var alarmBtn:ImageButton
+        lateinit var soundBtn:ImageButton
+        lateinit var emergencyBtn:ImageButton
         fun overwriteTasksJsonFile(context: Context,tasks: MutableList<Int>) {
             val gson = Gson()
             // Convert the list to a JSON string
@@ -74,9 +81,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun normalFlow() {
-        setContentView(R.layout.ok)
-        var button = findViewById<ImageButton>(R.id.btnMain)
+        setContentView(R.layout.ok_alternative)
+        mainLayout=findViewById(R.id.home_container)
+        soundLayout=findViewById(R.id.sounds_container)
+        alarmLayout=findViewById(R.id.alarm_container)
+        tasksLayout=findViewById(R.id.games_container)
+        mainBtn=findViewById(R.id.btnMain)
+        alarmBtn=findViewById(R.id.btnAlarm)
+        soundBtn=findViewById(R.id.btnSounds)
+        emergencyBtn=findViewById(R.id.btnEmergency)
+        button = mainBtn
         button.isClickable = false
+        currentLayout= mainLayout
+        currentLayout.setBackgroundColor(Color.CYAN)
         var recent: Alarm
         var sampleAlarmLists = loadAlarmLists(this)
         println(sampleAlarmLists)
@@ -141,42 +158,97 @@ class MainActivity : AppCompatActivity() {
                 return when (position) {
                     0 -> ViewPagerAdapter.MainFragment()
                     1 -> ViewPagerAdapter.AlarmFragment()
-                    2 -> ViewPagerAdapter.SoundsFragment()
+
+                    2 ->ViewPagerAdapter.SoundsFragment()
                     3 -> ViewPagerAdapter.EmergencyFragment()
 
 
 
-                    else -> ViewPagerAdapter.MainFragment() // Default case
+                    else -> ViewPagerAdapter.EmergencyFragment() // Default case
                 }
             }
         }
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if(viewPager2.adapter== fragmentAdapter){
+                // Perform an action when a specific page is selected
+                    when (position) {
+                        0 -> {
+                            button.isClickable = true
+                            currentLayout.setBackgroundColor(Color.WHITE)
+                            button = mainBtn
+                            currentLayout = mainLayout
+                            currentLayout.setBackgroundColor(Color.CYAN)
+                            button.isClickable = false
+                            // Action for page 0
+                        }
+
+                        1 -> {
+                            // Action for page 1
+                            button.isClickable = true
+                            currentLayout.setBackgroundColor(Color.WHITE)
+                            button = alarmBtn
+                            currentLayout = alarmLayout
+                            currentLayout.setBackgroundColor(Color.CYAN)
+                            button.isClickable = false
+                        }
+
+                        2 -> {
+                            // Action for page 4
+                            button.isClickable = true
+                            currentLayout.setBackgroundColor(Color.WHITE)
+                            button = soundBtn
+                            currentLayout = soundLayout
+                            currentLayout.setBackgroundColor(Color.CYAN)
+                            button.isClickable = false
+                        }
+
+                        3 -> {
+                            button.isClickable = true
+                            currentLayout.setBackgroundColor(Color.WHITE)
+                            button = emergencyBtn
+                            currentLayout = tasksLayout
+                            currentLayout.setBackgroundColor(Color.CYAN)
+                            button.isClickable = false
+                        }
+                    }
+                }else{
+                    button.isClickable = true
+                    currentLayout.setBackgroundColor(Color.WHITE)
+                    button = emergencyBtn
+                    currentLayout = tasksLayout
+                    currentLayout.setBackgroundColor(Color.CYAN)
+                }
+            }
+        })
+
         viewPager2.adapter = fragmentAdapter
         viewPager2.isUserInputEnabled = true
         viewPager2.currentItem = 3
         viewPager2.currentItem = 0
 
-
         // Manually handle left swipe from page 4
         // Set up footer button click listeners
-        findViewById<ImageButton>(R.id.btnMain).setOnClickListener {
+        mainBtn.setOnClickListener {
             viewPager2.adapter = fragmentAdapter
             viewPager2.isUserInputEnabled = true
-            var grey_color = it.background
-            button.background = grey_color
+            currentLayout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
-            button = it as ImageButton
-            button.background = cyan_color
+            button = mainBtn
+            currentLayout= mainLayout
+            currentLayout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 0  // Go to MainFragment
         }
         findViewById<ImageButton>(R.id.btnAlarm).setOnClickListener {
             viewPager2.adapter = fragmentAdapter
             viewPager2.isUserInputEnabled = true
-            var grey_color = it.background
-            button.background = grey_color
+            currentLayout.setBackgroundColor(Color.WHITE)
             button.isClickable = true
-            button = it as ImageButton
-            button.background = cyan_color
+            button = alarmBtn
+            currentLayout= alarmLayout
+            currentLayout.setBackgroundColor(Color.CYAN)
             button.isClickable = false
             viewPager2.currentItem = 1  // Go to AlarmFragment
         }
@@ -195,10 +267,7 @@ class MainActivity : AppCompatActivity() {
             var grey_color = it.background
             viewPager2.adapter = fragmentAdapter
             viewPager2.isUserInputEnabled = true
-            button.background = grey_color
-            button.isClickable = true
-            button = it as ImageButton
-            button.background = cyan_color
+
             button.isClickable = false
             viewPager2.currentItem = 3  // Go to EmergencyFragment
         }
