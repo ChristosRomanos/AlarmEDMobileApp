@@ -32,8 +32,18 @@ import com.example.alarmedmobileapp.Data.loadAlarmLists
 import com.example.alarmedmobileapp.Data.loadSoundFiles
 import com.example.alarmedmobileapp.Data.overwriteAlarmsJsonFile
 import com.example.alarmedmobileapp.MainActivity
+import com.example.alarmedmobileapp.MainActivity.Companion.alarmBtn
+import com.example.alarmedmobileapp.MainActivity.Companion.alarmLayout
+import com.example.alarmedmobileapp.MainActivity.Companion.button
+import com.example.alarmedmobileapp.MainActivity.Companion.currentLayout
 import com.example.alarmedmobileapp.MainActivity.Companion.difficulties
+import com.example.alarmedmobileapp.MainActivity.Companion.emergencyBtn
 import com.example.alarmedmobileapp.MainActivity.Companion.enabledTasks
+import com.example.alarmedmobileapp.MainActivity.Companion.mainBtn
+import com.example.alarmedmobileapp.MainActivity.Companion.mainLayout
+import com.example.alarmedmobileapp.MainActivity.Companion.soundBtn
+import com.example.alarmedmobileapp.MainActivity.Companion.soundLayout
+import com.example.alarmedmobileapp.MainActivity.Companion.tasksLayout
 import com.example.alarmedmobileapp.MainActivity.Companion.viewPager2
 import com.example.alarmedmobileapp.R
 import kotlinx.coroutines.CoroutineScope
@@ -44,19 +54,59 @@ import kotlinx.coroutines.launch
 
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
-    override fun getItemCount(): Int = 8  // Total number of views
+    override fun getItemCount(): Int = 4  // Total number of views
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> MainFragment()
-            1 -> AlarmFragment()
-            2 -> SoundsFragment()
-            3 -> EmergencyFragment()
-            4 -> MathGameAdapter()
-            5 -> MatchAdapter()
-            6 -> OrderAdapter()
-            7 -> Repeat()
-            else -> throw IllegalStateException("Unexpected position $position")
+            0 -> {
+                button.isClickable = true
+                currentLayout.setBackgroundColor(Color.WHITE)
+                button = mainBtn
+                currentLayout = mainLayout
+                currentLayout.setBackgroundColor(Color.CYAN)
+                button.isClickable = false
+                MainFragment()
+            }
+
+            1 -> {
+                button.isClickable = true
+                currentLayout.setBackgroundColor(Color.WHITE)
+                button = alarmBtn
+                currentLayout = alarmLayout
+                currentLayout.setBackgroundColor(Color.CYAN)
+                button.isClickable = false
+                AlarmFragment()
+            }
+
+            2 -> {
+                button.isClickable = true
+                currentLayout.setBackgroundColor(Color.WHITE)
+                button = soundBtn
+                currentLayout = soundLayout
+                currentLayout.setBackgroundColor(Color.CYAN)
+                button.isClickable = false
+                SoundsFragment()
+            }
+
+            3 -> {
+                button.isClickable = true
+                currentLayout.setBackgroundColor(Color.WHITE)
+                button = emergencyBtn
+                currentLayout = tasksLayout
+                currentLayout.setBackgroundColor(Color.CYAN)
+                button.isClickable = false
+                EmergencyFragment()
+            }
+
+
+            else -> { button.isClickable = true
+                currentLayout.setBackgroundColor(Color.WHITE)
+                button = mainBtn
+                currentLayout = mainLayout
+                currentLayout.setBackgroundColor(Color.CYAN)
+                button.isClickable = false
+                MainFragment()
+            } // Default case
         }
     }
 

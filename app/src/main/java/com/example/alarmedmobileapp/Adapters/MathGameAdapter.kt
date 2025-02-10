@@ -66,7 +66,13 @@ class MathGameAdapter() : Fragment(){
         }
         val (numRange, operators) = when (difficulty) {
             1 -> 10..50 to listOf("+")
-            2 -> 5..20 to listOf("*")
+            2 ->{
+                if (Math.random()<0.5) {
+                    5..15 to listOf("*")
+                }else{
+                    30..60 to listOf("+")
+                }
+            }
             3 -> 10..50 to listOf("*")
             else -> 1..10 to listOf("+")
         }
