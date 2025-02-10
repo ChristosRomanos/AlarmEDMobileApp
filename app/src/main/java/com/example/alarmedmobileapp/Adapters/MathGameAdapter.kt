@@ -33,7 +33,6 @@ class MathGameAdapter() : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.math_quiz, container, false)
-        viewPager2.isUserInputEnabled=false
         if (MainActivity.alarmOn) {
             MainActivity.tasksDone.add(viewPager2.currentItem)
             MainActivity.difficulties[0]=MainActivity.enabledTasks[0]
@@ -67,7 +66,7 @@ class MathGameAdapter() : Fragment(){
         }
         val (numRange, operators) = when (difficulty) {
             1 -> 10..50 to listOf("+")
-            2 -> 1..15 to listOf("-", "*")
+            2 -> 5..20 to listOf("*")
             3 -> 10..50 to listOf("*")
             else -> 1..10 to listOf("+")
         }
@@ -115,11 +114,14 @@ class MathGameAdapter() : Fragment(){
                 }
                 MainActivity.viewPager2.setCurrentItem(next, false)
             }else{
-                viewPager2.isUserInputEnabled=true
                 finishBtn.visibility=View.VISIBLE
                 finishBtn.isClickable=true
                 finishBtn.setOnClickListener {
-                    viewPager2.currentItem=3
+                    MainActivity.viewPager2.adapter=MainActivity.fragmentAdapter
+                    MainActivity.viewPager2.setCurrentItem(3,false)
+                    MainActivity.viewPager2.isUserInputEnabled=true
+
+
                 }
             }
         }
