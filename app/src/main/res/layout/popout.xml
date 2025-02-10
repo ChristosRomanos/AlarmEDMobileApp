@@ -64,7 +64,7 @@
     <Button
         android:id="@+id/disableBtn"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:text="Disable"
         android:visibility="gone" />
 
